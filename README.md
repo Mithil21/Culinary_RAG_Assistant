@@ -1,110 +1,350 @@
-🍛 South Asian Culinary Assistant (Hybrid RAG AI)
-An intelligent, context-aware conversational AI designed exclusively for South Asian cuisine. Built using a Dual-Architecture Hybrid RAG (Retrieval-Augmented Generation) pipeline, this system combines deterministic rule-based routing with semantic vector search and a localized Large Language Model (Qwen2.5-0.5B) to deliver highly accurate, memory-aware recipe recommendations.
+🍛 South Asian Culinary Assistant
+Hybrid RAG Conversational AI for South Asian Recipes
+
+An intelligent, context-aware conversational AI designed exclusively for South Asian cuisine.
+This system uses a Hybrid Retrieval-Augmented Generation (RAG) architecture combining deterministic rule-based reasoning, semantic vector search, and a lightweight local LLM (Qwen2.5-0.5B) to deliver accurate, memory-aware recipe recommendations.
+
+The assistant supports multi-turn conversations, understands ingredient-based queries, and strictly operates within the South Asian culinary domain.
 
 ✨ Key Features
-Domain-Specific Constraints: Strict out-of-bounds handling ensures the AI only discusses South Asian cuisine.
+🌏 Domain-Constrained AI
 
-Conversational Memory (Context Merging): The backend merges recent chat history, allowing users to have multi-turn conversations (e.g., answering "Surprise me" -> "Vegetarian" -> "Spicy" -> "Quick").
+The assistant strictly operates within South Asian cuisine.
 
-Deterministic Ontology Mapping: Automatically translates foreign food requests (e.g., "pasta" or "taco") into South Asian equivalents (e.g., "seviyan" or "kathi roll") to keep the user engaged within the domain.
+If users ask for non-South-Asian food, the assistant politely redirects them while suggesting similar South Asian alternatives.
 
-Smart Slot Extraction: Uses Python-native regex and logic to extract dietary preferences, cooking time, and flavor profiles, building highly descriptive search queries without the latency of an LLM.
+Example:
 
-Skeleton Prompting: Forces the 0.5B LLM to output beautifully formatted Markdown (Introduction, Ingredients, Instructions) by providing structural visual templates.
+User: How do I cook pasta?
+Assistant: I specialize in South Asian cuisine. Would you like a similar South Asian dish?
 
-Custom Data Scraper & Tagger: A bespoke BeautifulSoup pipeline that bypasses complex Wiki DOM structures to extract clean recipe data, auto-tagging them with metadata (veg/non-veg, quick/slow, spicy/sweet) before indexing.
+🧠 Conversational Memory (Context Merging)
 
-🏗️ System Architecture
-The application is split into three main layers:
+The system maintains short-term conversational memory by merging recent messages.
 
-Frontend (Angular 18+ & Signals): Manages the user interface and chat state. It sends the entire chat history as an array to the backend for context and handles the "New Chat" memory flush.
+Example interaction:
 
-Backend API (Django & Django REST Framework): Receives the payload, splits the latest question from the history, and passes the context into the AI pipeline.
+User: Surprise me
+Assistant: Vegetarian or non-vegetarian?
 
-AI Engine (LangGraph & Transformers): A state-machine-driven pipeline that routes, retrieves, and generates the final response.
+User: Vegetarian
+Assistant: Spicy or mild?
 
-🧠 The LangGraph Pipeline (Under the Hood)
-The core "Brain" of the assistant is built using LangGraph. When a user sends a message, it flows through a strict state machine:
+User: Spicy and quick
+Assistant: Suggests relevant dishes
 
-1. classify_intent_node (The Gatekeeper)
-Instead of wasting LLM tokens on classification, this node uses lightning-fast Python logic to analyze the user's input and recent chat history.
+This allows the assistant to behave like a natural cooking companion rather than a one-shot chatbot.
 
-Intent Recognition: Classifies the prompt as RECIPE_REQUEST, INGREDIENTS_ONLY, VAGUE_REQUEST, NON_SOUTH_ASIAN, or ALTERNATIVE_REQUEST.
+🧭 Deterministic Ontology Mapping
 
-Context Merging: Combines the last two user messages to understand conversational continuity.
+Foreign cuisine requests are mapped to South Asian equivalents.
 
-Slot Extraction: Grabs keywords like "quick," "vegetarian," or "spicy" to attach to the search query.
+Examples:
 
-2. retrieve_node (Hybrid Search)
-If a recipe is needed, the system queries the FAISS Vector Database using the BAAI/bge-small-en-v1.5 embedding model.
+Foreign Request	Suggested South Asian Alternative
+Pasta	Seviyan
+Taco	Kathi Roll
+Noodles	Idiyappam
 
-It combines the user's question with the extracted slots (e.g., "South Asian quick spicy veg recipe using paneer").
+This keeps the assistant domain-focused while still being helpful.
 
-It groups the retrieved chunks by dish_name to ensure the final prompt has a complete Introduction, Ingredients list, and Instructions set.
+🧩 Smart Slot Extraction
 
-3. generate_recipe_node (The LLM)
-Powered by Qwen/Qwen2.5-0.5B-Instruct.
+Instead of relying on an LLM for simple tasks, the system extracts structured information using Python logic and regex.
 
-It takes the perfectly formatted FAISS context and the user's question.
+Extracted attributes include:
 
-It uses a Skeleton Prompt to guarantee the output is formatted in clean Markdown.
+Dietary preference (veg / non-veg)
 
-It strictly adheres to the rule: If the answer is not in the context, apologize and refuse to hallucinate.
+Cooking time (quick / slow)
 
-4. Edge Case Nodes (The UX Protectors)
-clarify_ingredients_node: If the user just types "milk, sugar", it asks how they want to use them.
+Flavor profile (spicy / sweet / mild)
 
-clarify_vague_node: If the user says "Surprise me", it asks them to narrow down their preferences (veg/non-veg, spicy/sweet).
+Dish style (rice-based / curry / snack)
 
-out_of_bounds_node: Politely rejects requests for Mexican, Italian, or other non-South Asian cuisines, offering a local alternative instead.
+These slots are merged into a descriptive search query such as:
+
+South Asian quick spicy vegetarian paneer recipe
+
+This reduces latency and improves retrieval accuracy.
+
+🧾 Skeleton Prompting
+
+The LLM is guided using structured prompt templates to enforce consistent formatting.
+
+Generated output follows this structure:
+
+Introduction
+Ingredients
+Instructions
+
+This ensures even a small 0.5B model produces clean and structured responses.
+
+🧹 Custom Data Scraper & Metadata Tagger
+
+A custom BeautifulSoup ingestion pipeline extracts recipe data from Wikibooks and other sources.
+
+The scraper:
+
+Cleans complex Wiki DOM structures
+
+Extracts recipe sections
+
+Tags metadata automatically
+
+Example metadata:
+
+veg / non-veg
+
+quick / slow
+
+spicy / sweet
+
+dish type
+
+This metadata improves FAISS retrieval accuracy.
+
+🏗 System Architecture
+
+The system is divided into three major layers.
+
+Frontend
+
+Angular 18 + Signals
+
+Responsibilities:
+
+Chat interface
+
+Chat state management
+
+Sends complete conversation history to backend
+
+Supports New Chat memory reset
+
+Backend API
+
+Django + Django REST Framework
+
+Responsibilities:
+
+Receives chat payload
+
+Separates latest message from conversation history
+
+Passes structured input to the AI engine
+
+Returns the generated recipe response
+
+AI Engine
+
+LangGraph + FAISS + Transformers
+
+The AI engine acts as a state-machine pipeline responsible for:
+
+intent routing
+
+slot extraction
+
+semantic retrieval
+
+recipe generation
+
+🧠 LangGraph Pipeline
+
+Each user message flows through a structured pipeline.
+
+1️⃣ classify_intent_node — The Gatekeeper
+
+This node uses Python rule-based logic instead of an LLM to classify user intent.
+
+Recognized intents include:
+
+RECIPE_REQUEST
+
+INGREDIENTS_ONLY
+
+VAGUE_REQUEST
+
+NON_SOUTH_ASIAN
+
+ALTERNATIVE_REQUEST
+
+It also merges recent messages to understand conversation continuity.
+
+Example:
+
+User: chicken rice
+User: quick spicy
+
+The system merges these into a single structured search query.
+
+2️⃣ retrieve_node — Hybrid Retrieval
+
+Queries the FAISS vector database using embeddings from:
+
+BAAI/bge-small-en-v1.5
+
+The retriever:
+
+Builds a semantic search query
+
+Retrieves top recipe chunks
+
+Groups chunks by dish_name
+
+Ensures the final context includes:
+
+Introduction
+Ingredients
+Instructions
+
+This guarantees the LLM receives complete recipe context.
+
+3️⃣ generate_recipe_node — The LLM
+
+Powered by:
+
+Qwen/Qwen2.5-0.5B-Instruct
+
+Responsibilities:
+
+Uses retrieved FAISS context
+
+Formats response using Skeleton Prompt
+
+Generates structured Markdown recipe output
+
+Safety rule:
+
+If the requested information is not found in the retrieved context, the model refuses to hallucinate and politely apologizes.
+
+4️⃣ Edge Case Nodes — UX Protection
+
+Special nodes improve conversation flow.
+
+clarify_ingredients_node
+
+If the user enters only ingredients:
+
+milk, sugar
+
+The assistant asks how they want to use them.
+
+clarify_vague_node
+
+If the user gives vague input:
+
+Surprise me
+
+The assistant asks preference questions such as veg/non-veg or spicy/mild.
+
+out_of_bounds_node
+
+Handles non-South-Asian cuisine requests.
+
+Example:
+
+User: Mexican tacos
+Assistant: I specialize in South Asian cuisine. Would you like a similar dish?
 
 🚀 Setup & Installation
 Prerequisites
+
 Python 3.10+
 
-Node.js & Angular CLI
+Node.js
 
-At least 4GB of RAM (for the 0.5B model + FAISS)
+Angular CLI
 
-1. Environment Setup
-# Clone the repository
+Minimum 4GB RAM (for FAISS + local LLM)
+
+1️⃣ Environment Setup
+
+Clone the repository
+
 git clone https://github.com/Mithil21/Culinary_RAG_Assistant.git
+
 cd Culinary_RAG_Assistant
 
-# Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+Create virtual environment
 
-# Install Python dependencies
+python -m venv venv
+source venv/bin/activate
+
+Windows users:
+
+venv\Scripts\activate
+
+Install dependencies
+
 pip install -r requirements.txt
 
-2. Build the Vector Database
-Before starting the server, you must scrape the recipes and build the FAISS index.
+2️⃣ Build the Vector Database
 
-# Navigate to the chatbot directory
+Navigate to chatbot directory
+
 cd chatbot
 
-# Run the ingestion pipeline (Scrapes data and saves to south_asian_corpus.json)
-python vector_db_setup.py 
-## Note: Ensure the vector_store.save_local("./faiss_index") runs successfully.
+Run the ingestion pipeline
 
-3. Run the Backend (Django)
+python vector_db_setup.py
 
-# From the root Django directory
+This step:
+
+Scrapes recipe data
+
+Generates south_asian_corpus.json
+
+Builds the FAISS index
+
+Ensure the FAISS index saves successfully:
+
+vector_store.save_local("./faiss_index")
+
+3️⃣ Run the Backend
+
+From the Django project directory:
+
 python manage.py runserver --noreload
-## (Note: --noreload is highly recommended to prevent Django from loading the LLM into memory twice during development).
 
-4. Run the Frontend (Angular)
-# Open a new terminal tab
+Using --noreload prevents Django from loading the LLM twice in development mode.
+
+4️⃣ Run the Frontend
+
+Open a new terminal:
+
 cd culinary_ui
 npm install
 ng serve
 
-Navigate to http://localhost:4200 in your browser to start cooking!
+Open the application in your browser:
 
-🛠️ Future Scope
-Markdown Parsing: Implement ngx-markdown on the Angular frontend to beautifully render the LLM's structured output.
+http://localhost:4200
 
-Dynamic Metadata Filtering: Upgrade the FAISS retriever from semantic keyword injection to true SelfQueryRetriever metadata filtering.
+🛠 Future Improvements
+Markdown Rendering
 
-Expanded Corpus: Add more diverse South Asian recipe sources to the ingestion pipeline.
+Integrate ngx-markdown in the Angular frontend to render structured recipes beautifully.
+
+Advanced Metadata Retrieval
+
+Upgrade the FAISS retriever to support metadata filtering using:
+
+SelfQueryRetriever
+
+Expanded Recipe Corpus
+
+Expand the ingestion pipeline with additional recipe sources including:
+
+regional datasets
+
+culinary blogs
+
+structured food datasets
+
+📌 Project Vision
+
+This project demonstrates how small local LLMs combined with structured retrieval, deterministic routing, and domain constraints can produce reliable conversational systems without relying on large cloud-based models.
+
+The architecture highlights how hybrid AI systems combining rule-based logic with retrieval and lightweight LLMs can deliver accurate domain-specific assistants.
