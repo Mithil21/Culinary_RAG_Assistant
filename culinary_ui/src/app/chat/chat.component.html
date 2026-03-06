@@ -1,0 +1,54 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h1>🍳 Culinary Assistant</h1>
+    <p>Your AI-powered cooking companion</p>
+  </div>
+
+  <div class="messages-container">
+    @if (messages().length === 0) {
+      <div class="welcome">
+        <div class="welcome-icon">👨🍳</div>
+        <h2>Welcome to Culinary Assistant!</h2>
+        <p>Ask me anything about recipes, cooking techniques, or ingredients.</p>
+      </div>
+    }
+    
+    @for (message of messages(); track $index) {
+      <div class="message" [class.user]="message.role === 'user'" [class.assistant]="message.role === 'assistant'">
+        <div class="avatar">{{ message.role === 'user' ? '👤' : '🤖' }}</div>
+        <div class="content">
+          <div class="text">{{ message.content }}</div>
+          @if (message.chunks && message.chunks.length > 0) {
+            <div class="chunks">
+              <div class="chunks-header">📚 Sources Used:</div>
+              @for (chunk of message.chunks; track $index) {
+                <div class="chunk">{{ chunk }}</div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (isLoading()) {
+      <div class="message assistant">
+        <div class="avatar">🤖</div>
+        <div class="content loading">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="input-container">
+    <textarea 
+      [(ngModel)]="userInput"
+      (keypress)="handleKeyPress($event)"
+      placeholder="Ask about recipes, ingredients, cooking tips..."
+      rows="1"
+    ></textarea>
+    <button (click)="sendMessage()" [disabled]="!userInput().trim() || isLoading()">
+      <span>{{ isLoading() ? '⏳' : '➤' }}</span>
+    </button>
+  </div>
+</div>
