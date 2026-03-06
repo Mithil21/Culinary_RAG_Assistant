@@ -86,17 +86,15 @@ cd chatbot
 
 # Run the ingestion pipeline (Scrapes data and saves to south_asian_corpus.json)
 python vector_db_setup.py 
-# Note: Ensure the vector_store.save_local("./faiss_index") runs successfully.
+## Note: Ensure the vector_store.save_local("./faiss_index") runs successfully.
 
 3. Run the Backend (Django)
 
 # From the root Django directory
 python manage.py runserver --noreload
-
-(Note: --noreload is highly recommended to prevent Django from loading the LLM into memory twice during development).
+## (Note: --noreload is highly recommended to prevent Django from loading the LLM into memory twice during development).
 
 4. Run the Frontend (Angular)
-
 # Open a new terminal tab
 cd culinary_ui
 npm install
