@@ -68,8 +68,8 @@ At least 4GB of RAM (for the 0.5B model + FAISS)
 
 1. Environment Setup
 # Clone the repository
-git clone [YOUR_REPO_URL]
-cd [YOUR_REPO_FOLDER]
+git clone https://github.com/Mithil21/Culinary_RAG_Assistant.git
+cd Culinary_RAG_Assistant
 
 # Create and activate a virtual environment
 python -m venv venv
