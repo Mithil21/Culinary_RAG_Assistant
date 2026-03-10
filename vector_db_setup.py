@@ -5,7 +5,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 # 1. Load your raw JSON data
 print("Loading raw JSON data...")
-with open("south_asian_corpus.json", "r", encoding="utf-8") as f:
+with open("south_asian_corpus_enriched.json", "r", encoding="utf-8") as f:
     raw_data = json.load(f)
 
 documents = []
