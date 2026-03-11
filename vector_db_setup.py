@@ -1,64 +1,83 @@
 import json
+import re
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 
-# 1. Load your raw JSON data
-print("Loading raw JSON data...")
-with open("south_asian_corpus_enriched.json", "r", encoding="utf-8") as f:
-    raw_data = json.load(f)
+def process_and_chunk_recipes(input_file):
+    print(f"Loading enriched data from {input_file}...")
+    
+    with open(input_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-documents = []
+    docs = []
+    
+    for recipe in data:
+        # Grabbing from the TOP-LEVEL of your JSON
+        dish_name = recipe.get("title", "Unknown Dish")
+        cuisine_type = recipe.get("cuisine_type", "South Asian")
+        full_text = recipe.get("full_text", "")
+        source_url = recipe.get("source_url", "")
+        
+        # Grabbing from the NESTED metadata of your JSON
+        llm_metadata = recipe.get("metadata", {})
 
-print("Auto-tagging and creating documents...")
-for item in raw_data:
-    text_content = item.get("text", "")
-    existing_metadata = item.get("metadata", {})
+        # Split the full_text back into our 3 distinct sections
+        sections = re.split(r'\n---\s*(Introduction|Ingredients|Instructions)\s*---\n', full_text, flags=re.IGNORECASE)
+        
+        # --- NEW: Extract ingredients text to add to ALL chunks for this dish ---
+        ingredients_list = []
+        for i in range(1, len(sections), 2):
+            if sections[i].lower() == "ingredients":
+                raw_ingredients = sections[i+1].strip()
+                # Clean up the text into a nice list (stripping bullets/dashes)
+                ingredients_list = [line.strip().lstrip("-*• ") for line in raw_ingredients.split("\n") if line.strip()]
+                break
+        
+        for i in range(1, len(sections), 2):
+            content_type = sections[i].lower()
+            content_text = sections[i+1].strip()
+            
+            if not content_text:
+                continue
+                
+            # Create a clean LangChain document with rich FAISS metadata
+            doc = Document(
+                page_content=content_text,
+                metadata={
+                    "dish_name": dish_name, 
+                    "cuisine_type": cuisine_type,
+                    "content_type": content_type,  
+                    "source_url": source_url,
+                    "diet": llm_metadata.get("diet", "unknown"),
+                    "prep_time": llm_metadata.get("prep_time", "unknown"),
+                    "dish_type": llm_metadata.get("dish_type", "unknown"),
+                    "ingredients": ingredients_list  # <--- Injecting the ingredients list here!
+                }
+            )
+            docs.append(doc)
+
+    return docs
+
+def main():
+    input_file = "south_asian_corpus_enriched.json" 
     
-    dish_name = existing_metadata.get("dish_name", "Unknown Dish")
+    docs = process_and_chunk_recipes(input_file)
+    print(f"Successfully generated {len(docs)} highly structured chunks.")
     
-    # Auto-Tagger: Analyze both the text and the dish name for keywords
-    search_text = (text_content + " " + dish_name).lower()
-    
-    # Define tags based on keywords
-    is_veg = "yes" if any(w in search_text for w in ["paneer", "vegetable", "lentil", "dal", "chickpea"]) else "no"
-    is_non_veg = "yes" if any(w in search_text for w in ["chicken", "meat", "fish", "mutton", "lamb"]) else "no"
-    is_quick = "yes" if any(w in search_text for w in ["quick", "10 mins", "15 mins", "fast", "easy"]) else "no"
-    is_spicy = "yes" if any(w in search_text for w in ["chili", "spicy", "hot", "masala", "pepper"]) else "no"
-    is_sweet = "yes" if any(w in search_text for w in ["sweet", "dessert", "sugar", "syrup", "jaggery"]) else "no"
-    
-    # Create a consolidated flavor tag for easier searching
-    flavor = "spicy" if is_spicy == "yes" else ("sweet" if is_sweet == "yes" else "")
-    
-    # Merge your existing JSON metadata with the new tags using Python's ** unpacking
-    enhanced_metadata = {
-        **existing_metadata, 
-        "vegetarian": is_veg,
-        "non_vegetarian": is_non_veg,
-        "quick": is_quick,
-        "flavor": flavor
-    }
-    
-    # Create the final LangChain Document
-    doc = Document(
-        page_content=text_content,
-        metadata=enhanced_metadata
+    print("Initializing embedding model (BAAI/bge-small-en-v1.5)...")
+    embeddings = HuggingFaceEmbeddings(
+        model_name="BAAI/bge-small-en-v1.5",
+        model_kwargs={"device": "cpu"},
+        encode_kwargs={"normalize_embeddings": True},
     )
-    documents.append(doc)
+    
+    print("Building FAISS Vector Database...")
+    vector_store = FAISS.from_documents(docs, embeddings)
+    
+    output_dir = "./faiss_index"
+    vector_store.save_local(output_dir)
+    print(f"Done! Vector store saved to {output_dir}")
 
-print(f"Successfully processed {len(documents)} documents.")
-
-# 2. Embed and save to FAISS
-print("Initializing Embedding Model...")
-bge_embeddings = HuggingFaceEmbeddings(
-    model_name="BAAI/bge-small-en-v1.5",
-    model_kwargs={"device": "cpu"},
-    encode_kwargs={"normalize_embeddings": True},
-)
-
-print("Building FAISS index... (This may take a minute)")
-vector_store = FAISS.from_documents(documents, bge_embeddings)
-
-print("Saving FAISS index locally...")
-vector_store.save_local("./faiss_index")
-print("Done! Your database is now tagged and ready.")
+if __name__ == "__main__":
+    main()

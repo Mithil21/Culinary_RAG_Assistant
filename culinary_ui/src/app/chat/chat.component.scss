@@ -53,6 +53,25 @@
       .content {
         color: #d1d5db;
 
+        .text {
+          strong {
+            color: #818cf8;
+          }
+
+          hr {
+            border-top-color: #404040;
+          }
+        }
+
+        .recipe-card {
+          background: linear-gradient(135deg, #4c51bf 0%, #5a3d7a 100%);
+          box-shadow: 0 10px 30px rgba(76, 81, 191, 0.4);
+
+          .recipe-section {
+            background: rgba(255, 255, 255, 0.1);
+          }
+        }
+
         .chunks {
           background: #2d2d2d;
           border-color: #404040;
@@ -316,6 +335,107 @@
 
     .text {
       margin-bottom: 0.5rem;
+
+      h1, h2, h3 {
+        margin: 1.5rem 0 1rem;
+        font-weight: 600;
+        color: inherit;
+      }
+
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.3rem; }
+      h3 { font-size: 1.15rem; }
+
+      ul {
+        margin: 0.75rem 0;
+        padding-left: 1.5rem;
+
+        li {
+          margin-bottom: 0.5rem;
+          line-height: 1.6;
+        }
+      }
+
+      p {
+        margin: 0.75rem 0;
+        line-height: 1.7;
+      }
+
+      hr {
+        margin: 1.5rem 0;
+        border: none;
+        border-top: 2px solid #e5e7eb;
+      }
+
+      strong {
+        font-weight: 600;
+        color: #667eea;
+      }
+    }
+
+    .recipe-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 2rem;
+      color: white;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+
+      .recipe-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0 0 1rem;
+        text-align: center;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .recipe-intro {
+        text-align: center;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        opacity: 0.95;
+      }
+
+      .recipe-section {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+
+        &:last-child { margin-bottom: 0; }
+
+        h4 {
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin: 0 0 1rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+
+        .ingredients-list,
+        .instructions-list {
+          margin: 0;
+          padding-left: 1.5rem;
+
+          li {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+
+            &::marker { font-weight: 600; }
+
+            strong {
+              font-weight: 600;
+            }
+          }
+        }
+
+        .instructions-list li {
+          padding-left: 0.5rem;
+        }
+      }
     }
 
     .chunks {
@@ -340,6 +460,28 @@
         font-size: 0.85rem;
         color: #4b5563;
         border-left: 3px solid #667eea;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+
+        strong {
+          flex: 1;
+          color: #111827;
+        }
+
+        a {
+          color: #667eea;
+          text-decoration: none;
+          font-size: 0.8rem;
+          white-space: nowrap;
+          transition: color 0.2s;
+
+          &:hover {
+            color: #5568d3;
+            text-decoration: underline;
+          }
+        }
       }
     }
 
