@@ -42,12 +42,51 @@
         <div class="message-inner">
           <div class="avatar">{{ message.role === 'user' ? '👤' : '🤖' }}</div>
           <div class="content">
-            <div class="text">{{ message.content }}</div>
+            @let formatted = message.content | recipeFormatter;
+            @if (formatted.type === 'recipe') {
+              <div class="recipe-card">
+                <h3 class="recipe-title">{{ formatted.data.title }}</h3>
+                @if (formatted.data.intro) {
+                  <p class="recipe-intro">{{ formatted.data.intro }}</p>
+                }
+                <div class="recipe-section">
+                  <h4>🥘 Ingredients</h4>
+                  <ul class="ingredients-list">
+                    @for (ingredient of formatted.data.ingredients; track $index) {
+                      @if (ingredient.name) {
+                        <li><strong>{{ ingredient.name }}:</strong> {{ ingredient.amount }}</li>
+                      } @else {
+                        <li>{{ ingredient }}</li>
+                      }
+                    }
+                  </ul>
+                </div>
+                <div class="recipe-section">
+                  <h4>👨🍳 Instructions</h4>
+                  <ol class="instructions-list">
+                    @for (instruction of formatted.data.instructions; track $index) {
+                      <li>
+                        @if (instruction.title) {
+                          <strong>{{ instruction.title }}:</strong> {{ instruction.text }}
+                        } @else {
+                          {{ instruction.text || instruction }}
+                        }
+                      </li>
+                    }
+                  </ol>
+                </div>
+              </div>
+            } @else {
+              <div class="text" [innerHTML]="message.content | markdownToHtml"></div>
+            }
             @if (message.chunks && message.chunks.length > 0) {
               <div class="chunks">
                 <div class="chunks-header">📚 Sources Used:</div>
                 @for (chunk of message.chunks; track $index) {
-                  <div class="chunk">{{ chunk }}</div>
+                  <div class="chunk">
+                    <strong>{{ chunk.dish_name }}</strong>
+                    <a [href]="chunk.source_url" target="_blank" rel="noopener noreferrer">🔗 View Source</a>
+                  </div>
                 }
               </div>
             }

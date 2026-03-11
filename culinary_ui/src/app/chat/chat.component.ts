@@ -2,11 +2,13 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatService, Message } from '../chat.service';
+import { RecipeFormatterPipe } from './recipe-formatter.pipe';
+import { MarkdownToHtmlPipe } from './markdown-to-html.pipe';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RecipeFormatterPipe, MarkdownToHtmlPipe],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
@@ -107,7 +109,7 @@ export class ChatComponent {
         this.messages.update(msgs => [...msgs, { 
           role: 'assistant', 
           content: response.answer || response.message || 'No response',
-          chunks: response.chunks_used || [],
+          chunks: response.chunks || [],
           intent: response.intent
         }]);
         this.saveCurrentChat();

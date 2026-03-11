@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface Message {
   role: 'user' | 'assistant';
   content: string;
-  chunks?: string[]; 
+  chunks?: { dish_name: string; source_url: string }[]; 
   intent?: string;   
   selected_dishes?: string[];
 }
