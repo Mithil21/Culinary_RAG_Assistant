@@ -221,7 +221,7 @@ def generate_recipe_node(state: GraphState):
     system_prompt = """You are a helpful South Asian Culinary Assistant.
 Your task is to clean and beautify the provided Retrieved Database Chunks to answer the user's request.
 You MUST rely ONLY on the information in the chunks. Do NOT invent or guess any ingredients or steps.
-If the chunks offer multiple options or variations, use all options without skipping them and beautify them (Meaning remove the unnecessary punctions, line and words).
+If the chunks offer multiple options or variations, beautify them (Meaning remove the unnecessary punctions, line and words).
 Format the output beautifully in Markdown."""
 
     user_prompt = f"Retrieved Database Chunks:\n{context_str}\n\nUser Request: {question}"
