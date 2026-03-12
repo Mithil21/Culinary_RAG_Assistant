@@ -48,15 +48,36 @@ def generate_metadata(recipe_text):
     Uses Few-Shot prompting with Llama 3 to enforce JSON output.
     """
     system_prompt = (
-        "You are a strict JSON data extraction API. "
-        "Analyze the recipe and return a valid JSON object. "
-        "RULES:\n"
-        "1. Keys must be EXACTLY: \"diet\", \"prep_time\", \"dish_type\". Do not add any other keys.\n"
-        "2. \"diet\" values: \"veg\" (no meat/eggs), \"non-veg\" (contains meat/poultry/fish/eggs).\n"
-        "3. \"prep_time\" values: \"quick\" (under 30 mins) or \"slow\" (over 30 mins or requires soaking/fermenting).\n"
-        "4. \"dish_type\" values: \"curry\", \"rice\", \"bread\", \"snack\", \"dessert\", \"beverage\".\n"
-        "5. Output ONLY the JSON."
-    )
+    "You are a strict JSON data extraction API for South Asian recipes. "
+    "Analyze the recipe and return exactly one valid JSON object.\n\n"
+
+    "RULES:\n"
+    "1. Output ONLY valid JSON.\n"
+    "2. Keys must be EXACTLY: \"diet\", \"prep_time\", \"dish_type\". Do not add extra keys.\n"
+    "3. \"diet\" must be one of:\n"
+    "   - \"veg\" = no meat, fish, seafood, or egg\n"
+    "   - \"non-veg\" = contains meat, chicken, fish, seafood, or egg\n"
+    "4. \"prep_time\" must be one of:\n"
+    "   - \"quick\" = under 30 minutes total\n"
+    "   - \"slow\" = 30 minutes or more, OR involves marination, soaking, fermentation, slow cooking, baking, or multiple cooking stages\n"
+    "5. \"dish_type\" must be EXACTLY one of these values:\n"
+    "   - \"curry\" = gravy-based dishes, masala dishes, fish curry, meat curry, kofta curry\n"
+    "   - \"dry-main\" = dry sabzi, stir-fried dishes, roasted or baked meat/fish dishes, bhuna-style dishes without much gravy\n"
+    "   - \"rice\" = biryani, pulao, khichdi, rice-based mains\n"
+    "   - \"bread\" = roti, naan, paratha, puri, dosa, appam, bhakri\n"
+    "   - \"snack\" = pakora, samosa, chaat, cutlet, fried snacks, light bites\n"
+    "   - \"dessert\" = kheer, halwa, ladoo, barfi, sweet dishes\n"
+    "   - \"beverage\" = drinks only, such as chai, lassi, sharbat, milk drinks, juices\n"
+    "   - \"pickle-condiment\" = chutney, achar, raita, dipping sauces, spreads, side condiments\n"
+    "6. IMPORTANT classification rules:\n"
+    "   - If the recipe contains fish, chicken, mutton, meat, egg, or seafood, it can NEVER be \"beverage\".\n"
+    "   - If it is served with rice or roti as a main dish, classify as \"curry\", \"dry-main\", or \"rice\".\n"
+    "   - If it has gravy, sauce, masala coating, or curry base, prefer \"curry\".\n"
+    "   - If it is dry, baked, roasted, fried, or sautéed without gravy, prefer \"dry-main\".\n"
+    "   - Use \"beverage\" only if the recipe is clearly meant to be drunk.\n"
+    "7. Infer the answer from title, intro, ingredients, and instructions.\n"
+    "8. Output ONLY the JSON."
+)
     
     truncated_text = recipe_text[:2000]
 

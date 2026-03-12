@@ -44,7 +44,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "curry"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -56,7 +56,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "curry"
+            "dish_type": "dry-main"
         }
     },
     {
@@ -67,7 +67,7 @@
         "full_text": "Title: Basic Indian Tomato Gravy\n\n--- Introduction ---\nBasic Indian Tomato Gravy\nCategory | Sauce recipes\nServings | 4\nTime | 20 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | India | Vegan Cuisine\nThis traditional Indian tomato gravy can be used as a base for all sorts of vegetables, boiled eggs , cubed paneer or chicken . This is often referred to as a \" curry \". It is usually eaten with plain white rice or rice mixtures .\n\n--- Ingredients ---\n- 5 tomatoes , diced large\n- 1 onion , diced small\n- 1 tablespoon ghee\n- \u00bd teaspoon ginger paste\n- 5 cloves garlic , pounded\n- 1 teaspoon chile powder\n- \u00bd teaspoon coriander powder\n- \u00bd teaspoon cumin powder\n- \u00bc teaspoon turmeric powder\n- Salt to taste\n\n--- Instructions ---\n1. Fry the onions in hot ghee until they start to brown.\n2. Add the ginger and garlic and stir, then add the powdered spices. Blend well.\n3. Throw in the tomatoes and salt to taste.\n4. Turn the flame down to medium and cover for ten minutes. This will form a spicy gravy to which you can add any mixture of vegetables or boiled eggs or fried fish or chicken or lamb/goat.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "curry"
         }
     },
@@ -80,7 +80,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "side dish"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -138,7 +138,7 @@
         "cuisine_type": "South Asian",
         "full_text": "Title: Butter Tea\n\n--- Introduction ---\nButter Tea\nCategory | Beverage recipes\nServings | 2\nTime | 20 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Beverages\nButter tea , known as Po Cha , is a traditional drink of the Tibetans and is also consumed in Bhutan . Butter tea is an indispensable part of Tibetan life. Before work, a Tibetan will down several bowlfuls of this tangy beverage, and it is always served to guests. Since butter is the main ingredient, butter tea is a very warming drink and a good antidote to the cold, so it is especially suited to high altitudes.\nAccording to the Tibetan custom, butter tea is drunk in separate sips, and after each sip the host refills the bowl to the brim. Thus the guest never drains his bowl yet it is constantly topped up. If the visitor does not wish to drink, the best thing to do is leave the tea untouched until the time comes to leave and then drain the bowl. In this way etiquette is observed and the host will not be offended.\n\n--- Ingredients ---\n- 1 tablespoon regular black tea leaves (preferably Nepalese or Indian )\n- 3 cups whole milk (or 1\u00bd cup half-and-half + 1\u00bd cup water)\n- 2 tablespoons unsalted butter\n- Salt to taste\n\n--- Instructions ---\n1. Boil tea with milk for 2\u201310 minutes, depending upon the strength of tea desired\n2. Strain into tea cups.\n3. Add butter and salt. Stir thoroughly, ideally by carefully using a blender, and serve.",
         "metadata": {
-            "diet": "veg",
+            "diet": "non-veg",
             "prep_time": "quick",
             "dish_type": "beverage"
         }
@@ -151,8 +151,8 @@
         "full_text": "Title: Buttermilk Curry Soup (Kadi Pakora)\n\n--- Introduction ---\nButtermilk Curry Soup (Kadi Pakora)\nCategory | Soup recipes\nServings | 4\nTime | 35 minutes\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes\n\n--- Ingredients ---\n- 1 cup besan (chickpea flour)\n- Water\n- Salt\n- Turmeric powder\n- Vegetable oil\n- 2 glasses cultured buttermilk\n- 1 tbsp besan\n- Turmeric powder\n- 1 pinch of asafoetida\n- Salt\n- Black mustard seeds\n- 1 clove garlic , minced\n- \u00bc- inch piece of ginger root, peeled and minced\n- 4\u20135 kadi patta ( curry leaves )\n- 1 small onion , finely chopped\n\n--- Instructions ---\n1. Mix besan with water, salt, and turmeric powder until you get a thick batter .\n2. Heat oil in big pan.\n3. Drop dollops of batter in the pan using a round spoon so that pakoras are round and fluffy.\n4. Fry until the pakoras are golden, then remove them from the oil.\n1. Mix buttermilk, 1 tbsp besan, turmeric powder, asafoetida, and salt until smooth and lump-free.\n2. Heat a little oil in a pan. Add mustard seeds, garlic, ginger, curry leaves, and onion, then fry it until slightly reddish in color.\n3. Stir the buttermilk mixture, and mix it into the onions. Continue mixing it over medium heat until it starts bubbling.\n4. Add the pakoras, lower the heat, and keep for some time. Close the lid and switch off the flame.\n5. Serve hot with rice or roti.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "soup"
+            "prep_time": "slow",
+            "dish_type": "curry"
         }
     },
     {
@@ -235,8 +235,8 @@
         "full_text": "Title: Chicken Tikka\n\n--- Introduction ---\nChicken Tikka\nCategory | Chicken recipes\nServings | 4\nTime | 30 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Meat recipes | Cuisine of India\nChicken tikka is a chicken dish originating in the Punjab region of the Indian Subcontinent made by baking chicken which has been marinated in spices and yoghurt . It should not be confused with Chicken Tikka Masala (of which it is an ingredient). It is traditionally cooked on skewers in a tandoor and is usually boneless. It is tasty when served with yellow rice and a spicy salad.\n\n--- Ingredients ---\n- 675 g (1.5 lb ) skinless and boneless chicken breast , diced into cubes\n- 1 tbsp mustard seed oil (see notes)\n- 50 ml (2 fl oz ) milk\n- 150 ml (5 fl oz ) natural yoghurt\n- 2 tbsp lemon juice\n- 1 tbsp tomato paste\n- 2 tbsp chopped fresh cilantro (coriander leaves)\n- 4 large cloves of garlic , finely chopped\n- 1\u20134 chopped fresh red chillis (depending on strength of the chillis and the desired strength of the marinade)\n- 2 tsp paprika\n- 2 tsp garam masala\n- 1 tsp cumin powder\n- \u00bd tsp turmeric\n- 1 tsp salt (use rock salt for best results)\n\n--- Instructions ---\n1. Add all of the ingredients except the chicken to a non-metallic mixing bowl , and mix well.\n2. Add the chicken and mix until fully coated.\n3. Ideally, the chicken should now be left in a refrigerator to marinate for at least 24 hours. It may not be safe to leave chicken which has previously been frozen for longer than 24 hours, but fresh chicken should be left to marinate for 48 hours for best results. If you do not wish to leave the chicken to marinate, simply continue to the next step.\n4. For best results, place on skewers and cook in a tandoor or ceramic pot oven. The chicken can also be cooked on skewers under a medium grill for 5\u20138 minutes on each side or barbecued (cooking times depend on the temperature of the barbecue). Always ensure the chicken is cooked throughout before serving. It should come apart easily when pressed down with the side of a fork.\n5. Serve with naan , with rice or use in a Chicken Tikka Masala .",
         "metadata": {
             "diet": "non-veg",
-            "prep_time": "quick",
-            "dish_type": "curry"
+            "prep_time": "slow",
+            "dish_type": "dry-main"
         }
     },
     {
@@ -296,7 +296,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "side dish"
+            "dish_type": "bread"
         }
     },
     {
@@ -308,7 +308,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -319,8 +319,8 @@
         "full_text": "Title: Chyapa Shutki Bharta\n\n--- Introduction ---\nChyapa Shutki Bharta\nCategory | Bengali recipes\nServings | 3\u20134\nTime | 30 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes\nChapa shutki bharta is a famous bharta from North Bengal that has become popular in almost all parts of the country. The strong aroma of dried fermented putinas fish, the spiciness of raw chilies, the tang of onion and garlic, and the taste of mustard oil combine to make it a completely homely, yet hearty dish. The dish goes best with hot white rice.\n\n--- Ingredients ---\nName | Count | Volume | Weight\nChepa shutki (Bengali dried fermented fish) | 6\u20138 ea. | About 100 grams\nChopped onion | 1 cup\nGarlic cloves | 4\u20135 ea.\nGreen chiles | 6\u20138 ea.\nSalt , to taste\nCoriander leaves , chopped | 2 tablespoons\nMustard oil | 3 tablespoons\n\n--- Instructions ---\n1. Clean and wash the fish. If you want, you can remove the scales and extra thorns.\n2. Fry the flat dried fish in a dry pan over low heat until the aroma comes out. Some people fry it with a little oil, but the taste is stronger when fried dry. Remove from the heat, and let cool.\n3. Grind the fish well in a mortar or bowl.\n4. Grind the chiles, garlic, and salt together.\n5. Lightly crush the onion with a fork to release the juice.\n6. Combine all the ingredients together, and serve.",
         "metadata": {
             "diet": "non-veg",
-            "prep_time": "quick",
-            "dish_type": "curry"
+            "prep_time": "slow",
+            "dish_type": "dry-main"
         }
     },
     {
@@ -344,7 +344,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -355,8 +355,8 @@
         "full_text": "Title: Coconut Chutney (South Indian)\n\n--- Introduction ---\nCoconut Chutney (South Indian)\nCategory | Chutney recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Cuisine of India | Side Dishes\nCoconut Chutney is served as a side dish for a lot of Indian snacks and breakfast items. It can be mild to extra hot depending on the individual preference. This recipe is from South India.\n\n--- Ingredients ---\n- 1\u00bd Tbsp channa dal\n- 1 cup finely-grated fresh coconut\n- 6\u20138 green hot chile peppers\n- \u00bd tsp tamarind paste\n- 1 Tbsp chopped cilantro\n- 1 tsp ginger paste\n- Salt to taste\n- \u00bd tsp oil\n- \u00bd tsp mustard seed\n- 3-4 curry leaves , chopped\n- \u00bc tsp asafoetida\n\n--- Instructions ---\n1. Dry roast the channa dal until browned. Allow it to cool.\n2. Grind the roasated dal, coconut, chiles, tamarind paste, cilantro, ginger paste, and salt in a blender with as little water as possible. For best results the final consistency must be somewhere between a coarse and smooth paste.\n3. For seasoning, heat the oil in a small ladle . Add the mustard seeds to hot oil, and allow them to crackle. When the crackling starts subsiding, add the asafoetida and the curry leaves, and stir for a few seconds.\n4. Add the seasoning mixture to the chutney, and mix well.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "beverage"
+            "prep_time": "slow",
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -368,7 +368,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -379,8 +379,8 @@
         "full_text": "Title: Corom Chatni (Mango Chutney with Hot Chillies)\n\n--- Introduction ---\nCorom Chatni (Mango Chutney with Hot Chillies)\nCategory | Chutney recipes\nYield | 12 oz (350 ml)\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | South Asian cuisine\n\n--- Ingredients ---\n- 1 firm, almost-ripe mango\n- 1 fresh red or green chilli pepper , stemmed, slit lengthwise, seeded and chopped (see note)\n- 1 tsp cilantro or mint , chopped\n- 1 tsp salt\n- \u215b tsp cayenne pepper\n- 2\u20133 Tbsp fresh orange juice , or a mixture of orange and lime juice\n\n--- Instructions ---\n1. Place the mango on one side on a work surface and make a slit in the tip across its width with a sharp knife . Then, hold the mango upright on its stem end on the work surface, and carefully slice the flesh, with the skin attached, off one side of the stone, as close to it as possible. Turn it the other way and cut off the flesh from the other side of the stone.\n2. Place each mango half, skin-side down, on the work surface, and cut lines through the flesh down to the skin in a lattice pattern so that you end up with a checker-board pattern with \u00bd- inch squares.\n3. Grasp the mango half with both your hands, skin down and your two thumbs on the flesh and your four fingers of each hand underneath on the skin. Now turn the skin inside out by pushing the skin inwards with your four fingers of each hand while pushing the two sides downward with your two thumbs.\n4. You will now have the inverted skin of the mango with cubes of flesh attached\u2014cut the cubes off with a sharp knife.\n5. Place the mango cubes in a small bowl.\n6. Add the chilli, cilantro, cayenne, orange/lime juice and salt and mix gently with a spoon.\n7. Leave to marinate in the refrigerator for 1\u20132 hours before serving.\n- Wear rubber gloves when working with chilli peppers and take care not to touch your eyes or face while handling them.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "dessert"
+            "prep_time": "slow",
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -403,7 +403,7 @@
         "full_text": "Title: Curry Fried Rice\n\n--- Introduction ---\nCurry Fried Rice\nCategory | Rice recipes\nServings | 5\nEnergy | 80 kcal.\nTime | 40 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Rice | Curry | Indian cuisine\n\n--- Ingredients ---\n- 3 tbsp cooking oil\n- 2 tbsp sesame oil\n- 2 cloves garlic , crushed and minced\n- 2 scallions , cut into 2 cm pieces\n- 200 g sukiyaki beef\n- 100 g bean sprouts , soaked in hot water\n- 200 g chicken , diced\n- 1 cup (600 g) Basmati rice, cooked\n- 10 g chilli powder\n- 20 g curry powder\n- 2 tbsp light soy sauce\n- 1 tbsp salt\n- 1 tbsp pepper\n\n--- Instructions ---\n1. Heat the oils in a non-stick frying pan . Add the garlic and scallion, and fry until fragrant.\n2. Add sukiyaki beef and chicken. Cook, stirring, for 1 minute until golden brown.\n3. Add bean sprouts, basmati rice, chilli powder and curry powder.\n4. Add soy sauce, salt, and pepper. Stir until well-mixed.",
         "metadata": {
             "diet": "non-veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "rice"
         }
     },
@@ -415,7 +415,7 @@
         "full_text": "Title: Dabeli (Potato-stuffed Buns with Chutney)\n\n--- Introduction ---\nDabeli (Potato-stuffed Buns with Chutney)\nServings | 2\u20133\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes\nDabeli is an Indian dish, originally from the region Kutch in Gujarat. Dabeli is now a common street food in Mumbai. It is also called double roti or kutchi dabeli.\n\n--- Ingredients ---\n- 1 tablespoon oil\n- 1 pinch of asafoetida powder\n- 2 teaspoons dabeli masala\n- 2 medium-sized potatoes , boiled and mashed\n- Salt\n- Water\n- Green chiles (optional), finely chopped\n- 2 tablespoons peanuts , roasted\n- 5\u20136 ladi-pav or burger buns\n- Butter\n- 1 onion , finely chopped\n- \u00bc cup sev\n- Garlic chutney (optional)\n- Tamarind date chutney\n- Finely-chopped cilantro\n- 1 handful of pomegranate seeds (optional)\n- Roasted peanuts\n\n--- Instructions ---\n1. Heat oil in a pan. Add asafoetida, dabeli masala, potatoes, salt to taste, and a sprinkle of water. Mix it very well so that masala, salt and boiled potato assimilate very well.\n2. Mix in the green chiles if using.\n3. Remove potato mixture from the heat, and taste. If you want to make it more spicy, add some more dabeli masala, and mix again using your hands or a masher. Toss in the roasted peanuts and mix everything well.\n1. Slice pav/bun into halves, and toast them with a little butter on a griddle .\n2. Apply garlic chutney to one half of the bun (inner side) and tamarind-date chutney to the other half.\n3. Place a portion of the potato filling in between between the bun halves.\n1. Top with chopped onion, coriander, and sev.\n2. Press down the bun from both side, and garnish with pomegranate seeds, and roasted peanuts.\n3. Serve immediately, while medium-hot, with a extra dip of chutney on the plate. Fried green chillies, with a sprinkle of salt can be additionally given as an add-on.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "bread"
         }
     },
@@ -440,7 +440,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "side dish"
+            "dish_type": "curry"
         }
     },
     {
@@ -475,7 +475,7 @@
         "full_text": "Title: Deep Fried Chiles Filled with Chickpea Flour (Mirchi Bhajji)\n\n--- Introduction ---\nDeep Fried Chiles Filled with Chickpea Flour (Mirchi Bhajji)\nCategory | Indian recipes\nYield | 5\u201310 bhajjies\nTime | 30 minutes\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian Cuisine\nMirchi bhajji are fried stuffed peppers.\n\n--- Ingredients ---\n- 11\u201317 long green peppers\n- 1\u00bd cup (360 g ) gram flour (besan)\n- 1 tbsp rice flour\n- 6\u20137 Indian green chiles , finely chopped\n- 1 tbsp coriander leaves finely chopped\n- 2 tbsp hot oil\n- Salt to taste\n- Oil to deep fry\n\n--- Instructions ---\n1. Slit 5\u201310 of the peppers, preferably the longest and fattest.\n2. Mix salt and gram flour. Stuff the slit peppers with this mixture, and keep aside for 15\u201320 minutes.\n3. Heat oil in a pan over medium heat.\n4. Mix all other dry ingredients. Dip each green pepper into this mixture gently to coat it.\n5. Deep fry in heated oil until golden brown.\n6. Drain on kitchen paper to remove excess oil.\n7. Serve hot with chutney or ketchup.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "snack"
         }
     },
@@ -536,7 +536,7 @@
         "metadata": {
             "diet": "non-veg",
             "prep_time": "slow",
-            "dish_type": "beverage"
+            "dish_type": "dry-main"
         }
     },
     {
@@ -560,7 +560,7 @@
         "metadata": {
             "diet": "non-veg",
             "prep_time": "slow",
-            "dish_type": "curry"
+            "dish_type": "dry-main"
         }
     },
     {
@@ -632,7 +632,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "cheese"
+            "dish_type": "beverage"
         }
     },
     {
@@ -727,8 +727,8 @@
         "full_text": "Title: Indian Curry Marinade\n\n--- Introduction ---\nIndian Curry Marinade\nCategory | Marinade recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes If you want a bit more flavor in a dish, substitute this for curry paste in a recipe.\n\n--- Ingredients ---\n- 1 tsp toasted coriander seeds\n- \u00bc tsp toasted cumin seeds\n- \u2153 cup plain yogurt\n- \u00bc cup red curry paste\n- 1 tbsp curry powder\n- 1 bay leaf\n- 1 \u00bd tsp salt\n- 1 \u00bd tsp freshly-ground white pepper\n- 1 tbsp cayenne pepper\n- 1 tbsp minced ginger\n- 1 tsp dried cilantro\n\n--- Instructions ---\n1. Pulse the toasted spices and the bay leaf in a spice grinder until finely ground. Combine remaining ingredients and ground spices.\n2. Keep refrigerated for up to 1 \u00bd weeks. Shake well before using.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "marinade"
+            "prep_time": "slow",
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -751,7 +751,7 @@
         "full_text": "Title: Indian Moong Dal\n\n--- Introduction ---\nIndian Moong Dal\nCategory | Indian recipes\nServings | 4\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes\nThis recipe is for cooking moong dal in the typical Indian way.\n\n--- Ingredients ---\n- \u00bd cup moong dal\n- 3 green chiles\n- \u00bd tsp turmeric powder\n- 1\u00bd cups water\n- Salt to taste\n- 2 tbsp cooking oil or ghee\n- 1 sprig curry leaves\n- 1 tsp jeera (cumin)\n\n--- Instructions ---\n1. Combine the dal, green chillies, turmeric powder, and water in a pressure cooker . Cook for 15 minutes, then leave the pressure cooker to release steam on its own.\n2. Open the pressure cooker and mash the cooked dal. Add salt to taste. Add more water if it is too thick and heat over a medium heat.\n3. Heat oil or ghee in a frying pan , then add jeera and curry leaves. After it splutters, pour it over the cooked dal.\n4. Serve hot with rice or rotis.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "rice"
         }
     },
@@ -764,7 +764,7 @@
         "metadata": {
             "diet": "non-veg",
             "prep_time": "quick",
-            "dish_type": "breakfast"
+            "dish_type": "snack"
         }
     },
     {
@@ -776,7 +776,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "rice"
+            "dish_type": "dry-main"
         }
     },
     {
@@ -787,7 +787,7 @@
         "full_text": "Title: Indian Rice\n\n--- Introduction ---\nIndian Rice\nCategory | Rice recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Cuisine of India | Vegan Cuisine\nThis makes an excellent side dish, and goes well with a large variety of things, from spicy eggplant to tofu to potatoes in coconut sauce.\n\n--- Ingredients ---\n- 2 teaspoons olive oil\n- 1 teaspoon cumin\n- \u00bd cup raisins\n- \u00bc cup cashews\n- 2 cups basmati rice\n- 4 cups water\n\n--- Instructions ---\n1. Heat the olive oil in a pot.\n2. Add the cumin, then the raisins and cashews. Saut\u00e9 for two minutes.\n3. Add the rice, and saut\u00e9 for another minute.\n4. Add water, and bring everything to a boil.\n5. Lower the heat, cover, and cook for 12 minutes.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "rice"
         }
     },
@@ -919,8 +919,8 @@
         "full_text": "Title: Keralan Vegetable Stew\n\n--- Introduction ---\nKeralan Vegetable Stew\nCategory | Stew recipes\nServings | 6\nTime | 25 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian Cuisine | Vegan\nThis coconut-flavoured vegetable stew is a famous dish of the South Indian coastal state of Kerala. It is often served with appam (rice pancakes). Though frequently made with chicken , this recipe is for the purely vegetable version of the stew.\n\n--- Ingredients ---\n- \u00bd coconut , freshly grated\n- 1\u00bd cups boiled vegetables ( carrots , green beans , potatoes , peas , etc.)\n- 2 Tbsp oil\n- 1 onion , diced\n- 1 very small piece of ginger , chopped\n- 2\u20135 green chillies (as desired), split lengthwise\n- 10 curry leaves\n- 4 cloves\n- 2 small pieces cinnamon\n- 2 pods green cardamom\n- 1 Tbsp vinegar\n- 1 Tbsp flour or rice flour or cornstarch\n- 1 pinch of salt\n- 1 tsp ground black pepper\n- 1 tsp mustard seed\n- 1 shallot\n\n--- Instructions ---\n1. Pour \u00be cup of water into the grated coconut. Squeeze out the milk through a strainer . Set aside; this is first milk.\n2. Pour \u00bd cup of water into the same coconut and squeeze out the second milk. Keep this aside as well.\n3. In a large pan , heat oil and add the cloves, cinnamon, and cardamom.\n4. Add the chopped onion, ginger, chillies and curry leaves. Fry until the onion is slightly browned.\n5. Add the boiled vegetables and stir for 1 minute.\n6. Pour in the second milk and boil for about 5\u20137 minutes.\n7. Add salt. Dissolve the maida/rice flour in a little water and add it to the sauce.\n8. When it boils again, add the first milk.\n9. Remove from the flame when it starts to boil once more.\n10. Season with the pepper, mustard, and shallot.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "stew"
+            "prep_time": "slow",
+            "dish_type": "curry"
         }
     },
     {
@@ -943,7 +943,7 @@
         "full_text": "Title: Khandvi (Rolled Chickpea Noodles)\n\n--- Introduction ---\nKhandvi (Rolled Chickpea Noodles)\nCategory | Indian recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes\nKhandvi (in Gujarati) or surali chya vadya (in Marathi) is a famous Western Indian dish. It is similar to rolled pasta made from chickpea flour. It is savoured as a snack or as a starter and is extremely popular in Gujarat and Northwestern Maharashtra.\n\n--- Ingredients ---\n- \u00bd cup besan (gram/chickpea flour)\n- 1 cup buttermilk (light variety if available, otherwise dilute with a 4 tablespoons of water)\n- 1 teaspoon ground ginger\n- \u00bd teaspoon turmeric\n- \u00bd teaspoon red chilli powder\n- Salt to taste\n- 1 \u00bd teaspoons mustard seeds\n- 1 teaspoon sesame seeds\n- 15\u201320 curry leaves , slivered\n- 1 jalape\u00f1o , very finely diced\n- 1\u20132 tablespoons grated coconut\n\n--- Instructions ---\n1. Combine the batter ingredients to make a smooth batter . Mix well with a whisk to ensure there are no lumps.\n2. Heat a wok or pan over medium-low heat, and add 2\u20133 teaspoons of oil.\n3. Add the batter to the wok. Begin stirring the batter continuously to prevent the formation of lumps during cooking. Continue stirring until the mixture thickens almost to a dough.\n4. Spread a small amount of the mixture on a greased surface to form a thin layer. Let cool, and try rolling it up. If you can't roll it up, the mixture needs to be cooked more.\n5. When the mixture is ready, quickly spread it in a very thin layer on a greased sheet. It should be thinner than a cr\u00eape . Let cool.\n6. Cut the cooled layer into strips, and roll the strips up.\n7. Garnish with the mustard seeds, sesame seeds, curry leaves, jalape\u00f1o, and coconut.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "snack"
         }
     },
@@ -1016,7 +1016,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1040,7 +1040,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1052,7 +1052,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1100,7 +1100,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "snack"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1111,7 +1111,7 @@
         "full_text": "Title: Maharashtrian Deep Fried Chickpea Dough Curry Snacks (Pakoda)\n\n--- Introduction ---\nMaharashtrian Deep Fried Chickpea Dough Curry Snacks (Pakoda)\nCategory | Fritter recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes\n\n--- Ingredients ---\n- 5\u20136 onions , peeled and sliced thin\n- 2\u20133 green chiles , washed and finely diced\n- Salt\n- \u00bd tsp turmeric powder\n- \u00bd tsp chile powder\n- 1 tsp ground cumin\n- 1 tsp ground coriander\n- Gram flour\n- Oil\n\n--- Instructions ---\n1. Combine onions and chiles. Mix in salt, and let sit 10\u201315 minutes.\n2. Mix in turmeric, chili powder, cumin, and coriander. By this time the onion mix should be moist due to added salt and spices. If a moister mix is required, allow to stand another 5 minutes.\n3. Start adding gram flour to the onion mix a little at a time. The mixture should not be dry. Add the flour just to absorb the moistness. You should end up with a somewhat sticky mixture.\n4. Heat sufficient oil in a wok or frying pan . Once heated sufficiently, carefully take around 2\u20133 tbsp of hot oil and add to the onion and gram flour mix. Mix well.\n5. Drop a few small to medium chunks of dough at a time in the medium hot oil. Fry until it gets a golden brown colour. If you have used 4\u20135 large onions and a medium wok you are likely to need 3\u20134 batches of frying to finish the mixture.\n6. Serve hot with green chutney or tomato ketchup.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "snack"
         }
     },
@@ -1135,7 +1135,7 @@
         "full_text": "Title: Malai Mixed Vegetable Curry\n\n--- Introduction ---\nMalai Mixed Vegetable Curry\nCategory | Curry recipes\nServings | 10\nTime | 30 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian Cuisine\nMalai mixed vegetable , is a creamy side dish for Indian bread.\n\n--- Ingredients ---\n- 3 green capsicums (bell peppers)\n- 1 each orange, yellow, and red capsicum\n- 1 cup paneer cubes\n- Cashew nuts\n- 4 large tomatoes\n- 1 cup chopped carrot\n- 1 cup peas\n- 3\u20134 green chillies (depending on spice requirement), finely chopped\n- Dried parsley and cilantro\n- 1 Tbsp butter or oil\n- Garam masala\n- Red chilli powder\n- Salt to taste\n- Turmeric\n- 1 quart whipping cream\n- 1 Tbsp sour cream\n- Cilantro for garnishing\n\n--- Instructions ---\n1. Cut the bell peppers into \u00bd- inch pieces.\n2. Saut\u00e9 paneer until golden brown; set aside.\n3. Soak a handful of cashew nuts in warm water.\n4. Grind the tomatoes and the soaked cashew into a fine paste. Keep this paste aside.\n5. Saut\u00e9 the chopped vegetables, green chillies, and dried parsley in the butter/oil until they are cooked. You could also microwave the vegetables for ~10 minutes without water, and then saut\u00e9 them in butter for a minute.\n6. Add the tomato paste to the vegetables and cook for 5 minutes.\n7. Add the garam masala, red chilli powder, salt, and turmeric according to taste; simmer for 2 minutes.\n8. Add the whipping cream and the sour cream, and let it cook until the cream thickens.\n9. Add the paneer and mix well.\n10. Garnish with cilantro and cashew nuts.\n11. Serve hot with naan or roti .",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "curry"
         }
     },
@@ -1172,7 +1172,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1184,7 +1184,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "beverage"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1195,8 +1195,8 @@
         "full_text": "Title: Mango and Coconut Chutney (Am ki Chatni)\n\n--- Introduction ---\nMango and Coconut Chutney (Am ki Chatni)\nCategory | Chutney recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian cuisine\n\n--- Ingredients ---\n- 2 almost-ripe mangoes\n- 1 Tbsp fresh or canned coconut , finely chopped\n- 1 tsp cilantro or mint , chopped\n- 1 Tbsp fresh ginger, scraped and finely chopped\n- 1 tsp salt\n- \u00bd tsp cayenne pepper\n- 2\u20133 Tbsp fresh orange juice , or a mixture of orange and lime juice\n\n--- Instructions ---\n1. Place the mango on one side on a work surface and make a slit in the tip across its width with a sharp knife. Then hold the mango upright on its stem end, on the work surface, and carefully slice the flesh, with the skin attached, off one side of the stone, as close to it as possible. Then turn it the other way and cut off the flesh from the other side of the stone.\n2. Place each mango half, skin-side down, on the work surface, and cut lines through the flesh down to the skin in a lattice pattern so that you end up with a checker-board pattern with \u00bd- inch squares.\n3. Grasp the mango half with both your hands, skin down and your two thumbs on the flesh and your four fingers of each hand underneath on the skin. Now, turn the skin inside out by pushing the skin inwards with your four fingers of each hand while pushing the two sides downward with your two thumbs. You will now have the skin of the mango with cubes of flesh attached which can be easily cut off with a sharp knife.\n4. Place the mango cubes in a small bowl.\n5. Add the coconut, cilantro, ginger, cayenne, orange/lime juice, and salt and mix gently with a tablespoon.\n6. Leave to marinate in the refrigerator for 1\u20132 hours before serving.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "beverage"
+            "prep_time": "slow",
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1244,7 +1244,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "snack"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1268,7 +1268,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "bread"
+            "dish_type": "snack"
         }
     },
     {
@@ -1351,8 +1351,8 @@
         "full_text": "Title: Onion Chutney\n\n--- Introduction ---\nOnion Chutney\nCategory | Chutney recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian Cuisine\nOnion chutney is a delicious sweet-and-sour chutney used as a side dish for many South Indian snacks and breakfast items. It is one of the components used in masala dosa assembly.\n\n--- Ingredients ---\n- 2 tsp oil\n- 2 tbsp channa dhal\n- 2 medium-sized red onions , coarsely chopped\n- 3 pieces of coconut , each 1x1 inch\n- 1 tsp tamarind paste\n- 4\u20136 dried red chile peppers\n- Salt to taste\n\n--- Instructions ---\n1. In a shallow pan, heat the oil. Add the chana dal, and stir until the dal is roasted.\n2. Add the onions, and stir fry them till they become transparent and the edges turn golden brown. Turn off the heat and let them cool for a few minutes.\n3. When cooled, blend together the onion mixture, coconut, chillies, tamarind, and salt until it makes a smooth paste. Add a few teaspoons of water if necessary.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "chutney"
+            "prep_time": "slow",
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1363,7 +1363,7 @@
         "full_text": "Title: Paneer Butter Masala\n\n--- Introduction ---\nPaneer Butter Masala\nCategory | Indian recipes\nServings | 2\nTime | 25 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian Cuisine | Vegetarian\nPaneer butter masala also known as paneer makhani is a vegetarian dish from India that is also popular in the west. The dish combines paneer in a sauce quite similar to that of butter chicken.\n\n--- Ingredients ---\n- Ghee or oil\n- 200 g paneer\n- 1 onion , diced\n- 1 tsp ginger paste\n- 5 tsp garlic paste\n- 1 capsicum , diced\n- 2 tomatoes , diced\n- 1 tsp ghee\n- 5 tsp hing powder\n- 1 tsp cardamom\n- 1 tsp turmeric\n- 1 tsp garam masala\n- 1 tsp chilli powder\n- 1 tsp cumin\n- 1 tsp lemon juice\n- 500 g natural (plain) yoghurt\n\n--- Instructions ---\n1. Fry paneer in ghee or oil, and set aside in a bowl.\n2. Saut\u00e9 onion in oil with garlic and ginger paste until golden brown.\n3. Add diced capsicum and tomatoes.\n4. In a separate pan combine ghee, hing, cardamom, turmeric, garam masala, chilli powder, lemon juice, and cumin.\n5. Fry for 2 minutes, then add yoghurt.\n6. Cook on medium heat for five minutes.\n7. Add onions, capsicum, tomatoes, and paneer.\n8. Cook on low heat for 15 minutes occasionally stirring.\n9. Serve with rotis or naan and rice .",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "curry"
         }
     },
@@ -1412,7 +1412,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "dessert"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1423,7 +1423,7 @@
         "full_text": "Title: Phulourie (Split Pea Fritters)\n\n--- Introduction ---\nPhulourie (Split Pea Fritters)\nCategory | Fritter recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes\nThis is a side dish that may be eaten with spicy dhaal , or with spicy \"sour\" chutney (similar to mango chutney ).\n\n--- Ingredients ---\n- \u00bd pt split peas , or 1 lb ground split pea flour\n- \u00bd cup flour\n- 1 teaspoon baking powder\n- 2\u20133 cloves garlic , ground\n- 1 beaten egg\n- Salt to taste\n- \u00bc teaspoon turmeric\n- \u00bd teaspoon ground gheera (cumin)\n- Oil for frying\n\n--- Instructions ---\n1. If using whole split peas, soak overnight in lightly salted cold water, lightly salted. Drain and grind finely using a mill or food processor .\n2. Mix all the ingredients, adding enough water to make a dropping consistency.\n3. Drop dollops of batter into hot oil, squishing through thumb and forefinger to make balls about \u00be inch in diameter.\n4. Fry until golden brown, remove from oil, and drain on brown paper or kitchen towel .",
         "metadata": {
             "diet": "veg",
-            "prep_time": "slow",
+            "prep_time": "quick",
             "dish_type": "snack"
         }
     },
@@ -1436,7 +1436,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "pickle"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1459,7 +1459,7 @@
         "full_text": "Title: Pohe (Spiced Flattened Rice)\n\n--- Introduction ---\nPohe (Spiced Flattened Rice)\nCategory | Vegetarian recipes\nServings | 1\u20132\nTime | 15 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Cuisine of India | Vegan cuisine\nPohe is a very popular breakfast dish in the Indian states of Maharashtra, Gujarat and Madhya Pradesh.\n\n--- Ingredients ---\n- 200 g thick pohe (flattened rice )\n- 2 tbsp oil\n- 1 tsp rai (mustard seeds)\n- \u00bc tsp haldi (turmeric powder)\n- 2 Indian green chiles , finely chopped\n- \u00bd medium-size onion , finely chopped\n- 2 sprigs of cilantro (coriander)\n- Salt to taste\n\n--- Instructions ---\n1. Moisten the pohe with cold water by putting in a bowl and holding under a slow running tap. Mix by hand, then drain excess water and set aside (take care not to soak too long or the pohe would turn pasty).\n2. Heat the oil in a frying pan until medium hot. Add the mustard seeds and let them crackle for a few seconds\n3. Add the turmeric powder and asafoetida and fry for a few seconds (take care not to burn the turmeric).\n4. Add the green chillies and fry for a few seconds.\n5. Add the chopped onion and lower the heat. Cover and cook for 2 minutes. The onions should turn soft but not brown.\n6. The pohe that was kept aside should have absorbed the excess moisture by now.\n7. Mix the pohe by hand so that the flakes do not stick together and add to the frying pan.\n8. Add salt to taste and stir the contents of the fry pay so that the yellow color of the turmeric is spread evenly through the pohe.\n9. Cover and cook for 5 minutes on low heat. Do not uncover during this time, as the pohe must cook in the steam.\n10. Stir and cook for another 1 minute uncovered.\n11. Serve in a bowl garnished with chopped coriander leaves.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "bread"
         }
     },
@@ -1483,7 +1483,7 @@
         "full_text": "Title: Potato Curry (Aloo Masala)\n\n--- Introduction ---\nPotato Curry (Aloo Masala)\nCategory | Side dish recipes\nServings | 4-6\nTime | 20 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian recipes | Vegan\nPotato masala (Tamil: uralai kizhangu masala ) is a potato dish often served alongside roti or folded inside a dosa . The dosa and aloo masala combination, widely eaten in South India , is known as masala dosa . Coconut chutney is a common accompaniment.\n\n--- Ingredients ---\n- 1 tablespoon oil\n- \u00bd teaspoon mustard seed\n- \u00bd tablespoon chana dhal (optional)\n- 5 curry leaves\n- 1 medium onion , chopped thin\n- 4-5 split green chillies\n- 4 large potatoes , cubed and par-boiled\n- 1 pinch of turmeric powder\n- \u00bd teaspoon salt\n\n--- Instructions ---\n1. Heat oil.\n2. Saut\u00e9e the mustard seed first, then add chana dhal, curry leaves, onion and chillies.\n3. Fry until the onions begin to change color.\n4. Add potatoes.\n5. Sprinkle the turmeric evenly and stir well to mix all the ingredients\n6. Cover and cook on a medium flame for about 5 minutes, stirring well, until the potatoes become very soft and somewhat mashed.\n7. Season with salt to taste.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "curry"
         }
     },
@@ -1532,7 +1532,7 @@
         "metadata": {
             "diet": "non-veg",
             "prep_time": "slow",
-            "dish_type": "beverage"
+            "dish_type": "curry"
         }
     },
     {
@@ -1543,7 +1543,7 @@
         "full_text": "Title: Puliyodarai (South Indian Tamarind Rice)\n\n--- Introduction ---\nPuliyodarai (South Indian Tamarind Rice)\nCategory | Rice recipes\nServings | 5\nTime | 20 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Indian Cuisine\nPuliyodarai , is a speciality of the South Indian coastal state of Tamil Nadu .\nAlso see Cookbook:Pulihora .\n\n--- Ingredients ---\n- 1 tbsp split peas\n- 1 tbsp coriander seeds\n- \u00bd tsp fenugreek seeds\n- 2\u20133 dry red chillies\n- 4 cups cooked white rice\n- Vegetable oil\n- 2 tsp mustard seeds\n- 3 tbsp gingely ( sesame ) oil (\"Til\" oil in Hindi, \"Nallennai\" in Tamil)\n- 2 tbsp split peas\n- 2 tbsp groundnuts ( peanuts )\n- \u00bd tsp asafoetida ( heengh in Hindi, perungayum in Tamil)\n- 3\u20134 dry red chillies\n- 4\u20135 curry leaves\n- 1.5 tbsp tamarind concentrate\n- 1 tsp turmeric powder\n- \u00be tbsp salt\n\n--- Instructions ---\n1. Dry roast all ingredients in a pan without oil until deep brown.\n2. Grind to a fine powder after the mix cools down.\n1. Heat the oil in a pan.\n2. Add groundnuts and split-peas, and fry until golden brown.\n3. Add mustard seeds, asafoetida and red-chillies (broken into pieces). Wait until the mustard seeds splutter, then remove pan from stove.\n4. Mix rice, salt, turmeric powder and tamarind concentrate. Add a little oil to the raw rice before cooking it. This gives it a better texture.\n5. Add the garnishing powder and curry leaves and mix well.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "rice"
         }
     },
@@ -1556,7 +1556,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "chutney"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1580,7 +1580,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "bread"
+            "dish_type": "rice"
         }
     },
     {
@@ -1616,7 +1616,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "dessert"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1628,7 +1628,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "soup"
+            "dish_type": "curry"
         }
     },
     {
@@ -1676,7 +1676,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "dessert"
+            "dish_type": "rice"
         }
     },
     {
@@ -1854,9 +1854,9 @@
         "cuisine_type": "South Asian",
         "full_text": "Title: South Asian cuisine\n\n--- Introduction ---\nSouth Asian cuisine includes the traditional cuisines from the modern-day South Asian republics of Bangladesh , India , Maldives , Nepal , Pakistan and Sri Lanka , also sometimes including the kingdom of Bhutan and the emirate of Afghanistan . Also sometimes known as Desi cuisine , it has been influenced by and also has influenced other Asian cuisines beyond the Indian subcontinent .",
         "metadata": {
-            "diet": "unknown",
-            "prep_time": "unknown",
-            "dish_type": "unknown"
+            "diet": "veg",
+            "prep_time": "slow",
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -1940,7 +1940,7 @@
         "metadata": {
             "diet": "non-veg",
             "prep_time": "slow",
-            "dish_type": "kebab"
+            "dish_type": "bread"
         }
     },
     {
@@ -2048,7 +2048,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "quick",
-            "dish_type": "condiment"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -2108,7 +2108,7 @@
         "metadata": {
             "diet": "non-veg",
             "prep_time": "slow",
-            "dish_type": "snack"
+            "dish_type": "bread"
         }
     },
     {
@@ -2132,7 +2132,7 @@
         "metadata": {
             "diet": "veg",
             "prep_time": "slow",
-            "dish_type": "curry"
+            "dish_type": "pickle-condiment"
         }
     },
     {
@@ -2143,8 +2143,8 @@
         "full_text": "Title: Upma (Indian Semolina Porridge)\n\n--- Introduction ---\nUpma (Indian Semolina Porridge)\nCategory | Indian recipes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | India | Vegetarian\nUpma is a popular South Indian dish made from semolina . Several variations of the dish exist including the use of different varieties of ground wheat, rice and even bread. A simple upma or uppittu takes just about 10 minutes to prepare. It uses very little oil/butter, making it one of the most popular, healthy and filling breakfasts in South India.\n\n--- Ingredients ---\n- 1 cup semolina\n- 1 cup mixed finely- chopped vegetables such as onion , carrots , lima beans , potatoes , capsicum , tomatoes , peas , etc.\n- 2\u20133 small green chillies , chopped\n- \u00bc- inch piece fresh ginger , chopped\n- 1 sprig fresh coriander , finely-chopped\n- 2 tbsp freshly- grated coconut\n- Salt to taste\n- \u00bd tsp sugar\n- 1 tbsp oil/ ghee\n- 1 tsp mustard seeds\n- 1 tsp cumin seeds\n- 1 tsp urad bean\n- 1 tbsp peanuts\n- 1 tbsp cashew halves\n- 1 pinch asafoetida\n- 4\u20135 curry leaves\n\n--- Instructions ---\n1. In a heated saucepan , lightly toast semolina until it changes to a light brown color and gives out a roasted smell. Pour it out onto a dry plate and allow to cool.\n2. To the same pan add \u00bd tbsp oil/ghee and allow it to heat up (about 1 minute). Now add all the seasoning ingredients, starting first with mustard seeds, cumin, black gram, peanuts, and cashews in that order. Wait for the mustard seeds to crackle and then add asafoetida and curry leaves.\n3. Add the chopped ginger, green chillies, and onions. Saut\u00e9 for 1 minute, then add the remaining veggies and 1 tbsp coconut. Saut\u00e9 again for about 1 minute, then add 1\u00bd cups of water and salt. Bring to a boil , lower to a simmer over medium heat, and cover to let the veggies cook for a few minutes.\n4. After the veggies are cooked, remove cover and stir in the sugar. Lower the heat further and start folding in the roasted and cooled semolina slowly while stirring constantly.\n5. Cover and let it cook for a few minutes.\n6. Garnish with the remaining coconut and chopped coriander leaves.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
-            "dish_type": "breakfast"
+            "prep_time": "slow",
+            "dish_type": "rice"
         }
     },
     {
@@ -2203,7 +2203,7 @@
         "full_text": "Title: Yogurt Curry Soup (Kadhi)\n\n--- Introduction ---\nYogurt Curry Soup (Kadhi)\nCategory | Curry recipes\nServings | 4\u20136\nTime | 15 minutes\nDifficulty\nCookbook | Recipes | Ingredients | Equipment | Techniques | Cookbook Disambiguation Pages | Recipes | Cuisine of India | Curry\nKadhi also known as Karhi or Gujarati Kadhi is a sweet yogurt curry, normally eaten with unleavened flat bread called roti and sabzi in India .\n\n--- Ingredients ---\n- 2 cups chickpea flour (besan)\n- 1\u00bd cups curds/ yogurt (dahi)\n- 1 tsp ginger-green chilli paste\n- 2 curry leaves (kadi patta)\n- 2 tbsp sugar\n- Salt to taste\n- 2 tsp ghee (clarified butter)\n- \u00bd tsp cumin seeds (jeera)\n- \u00bd tsp mustard seeds (rai/sarson)\n- 1 pinch asafoetida (hing)\n- 1 red chilli , broken into pieces\n- 2 tbsp chopped fresh coriander (dhania)\n\n--- Instructions ---\n1. Combine the gram flour, curds and 3 teacups of water in a pot. Beat well.\n2. Add the chilli-ginger paste, curry leaves, sugar, and salt. Bring to a boil .\n3. Boil whilst stirring for a while.\n4. Heat the ghee in a pan, add the cumin and mustard seeds, and toast until light brown. Don't let burn.\n5. Add the asafoetida and red chilli.\n6. Add the seasoning mixture to the curry, and boil for a few minutes.\n7. Sprinkle coriander on top and serve hot.\n- This is a basic chickpea curry/soup. But, you can make its variations with bitter gourd , pakora , spinach , and more.\n- Best served when hot.\n- This sweet yogurt curry is popular in Gujarat but in northern India, it is considered too sweet. So, prepare a variation depending on your guests' preference for spice.",
         "metadata": {
             "diet": "veg",
-            "prep_time": "quick",
+            "prep_time": "slow",
             "dish_type": "curry"
         }
     }
