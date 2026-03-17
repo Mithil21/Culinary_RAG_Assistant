@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="50" fill="#e8622a"/>
+
+  <!-- Chef hat -->
+  <ellipse cx="50" cy="38" rx="18" ry="5" fill="white"/>
+  <rect x="34" y="22" width="32" height="18" rx="4" fill="white"/>
+  <ellipse cx="50" cy="22" rx="13" ry="8" fill="white"/>
+
+  <!-- Hat band -->
+  <rect x="34" y="36" width="32" height="5" rx="1" fill="#f0d0b0"/>
+
+  <!-- Face -->
+  <circle cx="50" cy="58" r="16" fill="#f5c5a0"/>
+
+  <!-- Eyes -->
+  <circle cx="44" cy="55" r="2" fill="#3a2010"/>
+  <circle cx="56" cy="55" r="2" fill="#3a2010"/>
+
+  <!-- Smile -->
+  <path d="M44 63 Q50 68 56 63" stroke="#3a2010" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Moustache -->
+  <path d="M44 60 Q47 62 50 60 Q53 62 56 60" stroke="#7a4020" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Collar / uniform -->
+  <path d="M34 74 Q50 80 66 74 L66 100 L34 100 Z" fill="white"/>
+  <path d="M50 76 L46 100 L54 100 Z" fill="#e8622a"/>
+</svg>

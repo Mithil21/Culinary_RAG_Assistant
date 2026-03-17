@@ -1,149 +1,193 @@
+// ── Variables ──────────────────────────────────────────────
+$accent: #e8622a;
+$accent-dark: #c94f1a;
+$sidebar-w: 268px;
+$radius: 12px;
+
+// Light tokens
+$bg-light: #ffffff;
+$surface-light: #f7f7f8;
+$border-light: #e5e5e5;
+$text-light: #1a1a1a;
+$muted-light: #6b7280;
+
+// Dark tokens
+$bg-dark: #212121;
+$surface-dark: #2f2f2f;
+$border-dark: #3f3f3f;
+$text-dark: #ececec;
+$muted-dark: #8e8ea0;
+
+// ── Reset / Base ───────────────────────────────────────────
 .chat-container {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background: #f9fafb;
-  transition: background-color 0.3s;
+  background: $bg-light;
+  color: $text-light;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background 0.3s, color 0.3s;
 
+  // ── Dark Mode ────────────────────────────────────────────
   &.dark {
-    background: #1a1a1a;
+    background: $bg-dark;
+    color: $text-dark;
 
     .sidebar {
-      background: #2d2d2d;
-      border-right-color: #404040;
+      background: #171717;
+      border-right-color: $border-dark;
+
+      .brand-name { color: $text-dark; }
+      .sidebar-section-label { color: $muted-dark; }
 
       .new-chat-btn {
-        background: #3a3a3a;
-        color: #e5e7eb;
-
-        &:hover { background: #4a4a4a; }
+        border-color: $border-dark;
+        color: $text-dark;
+        &:hover { background: $surface-dark; }
       }
 
       .chat-item {
-        color: #d1d5db;
+        color: #c5c5d2;
+        &:hover { background: $surface-dark; }
+        &.active { background: #3a3a3a; color: $text-dark; }
+      }
 
-        &:hover { background: #3a3a3a; }
-        &.active { background: #4a4a4a; color: #fff; }
+      .chef-badge {
+        background: rgba($accent, 0.15);
+        color: #f4a07a;
+        border-color: rgba($accent, 0.3);
       }
     }
 
-    .chat-header {
-      background: #2d2d2d;
-      border-bottom-color: #404040;
-
-      h1 { color: #e5e7eb; }
-      p { color: #9ca3af; }
-
-      .sidebar-toggle:hover,
-      .theme-toggle:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
+    .topbar {
+      background: $bg-dark;
+      border-bottom-color: $border-dark;
+      .topbar-title { color: $text-dark; }
+      .icon-btn { color: $text-dark; &:hover { background: $surface-dark; } }
     }
 
     .welcome {
-      color: #d1d5db;
-      h2 { color: #f3f4f6; }
-      p { color: #9ca3af; }
+      h2 { color: $text-dark; }
+      p { color: $muted-dark; }
+      .chip {
+        background: $surface-dark;
+        border-color: $border-dark;
+        color: #c5c5d2;
+        &:hover { background: #3a3a3a; border-color: $accent; color: $text-dark; }
+      }
     }
 
     .message {
-      &.user { background: #2d2d2d; }
-      &.assistant { background: #1a1a1a; }
-
-      .content {
-        color: #d1d5db;
-
-        .text {
-          strong {
-            color: #818cf8;
-          }
-
-          hr {
-            border-top-color: #404040;
-          }
-        }
-
-        .recipe-card {
-          background: linear-gradient(135deg, #4c51bf 0%, #5a3d7a 100%);
-          box-shadow: 0 10px 30px rgba(76, 81, 191, 0.4);
-
-          .recipe-section {
-            background: rgba(255, 255, 255, 0.1);
-          }
-        }
-
-        .chunks {
-          background: #2d2d2d;
-          border-color: #404040;
-
-          .chunks-header { color: #e5e7eb; }
-          .chunk {
-            background: #3a3a3a;
-            color: #9ca3af;
-            border-left-color: #667eea;
-          }
-        }
-
-        &.loading span { background: #6b7280; }
+      &.user .bubble { background: $surface-dark; }
+      &.assistant .bubble { background: transparent; }
+      .sender-name { color: $muted-dark; }
+      .bubble .content .text {
+        color: $text-dark;
+        strong { color: #f4a07a; }
+        hr { border-top-color: $border-dark; }
+        h3 { color: $text-dark; }
       }
     }
 
-    .input-container {
-      background: #2d2d2d;
-      border-top-color: #404040;
-
-      textarea {
-        background: #1a1a1a;
-        color: #e5e7eb;
-        border-color: #404040;
-
-        &:focus {
-          border-color: #667eea;
-          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-
-        &::placeholder { color: #6b7280; }
-      }
+    .recipe-card {
+      background: linear-gradient(145deg, #2a1a0e, #3d1f0a);
+      border-color: rgba($accent, 0.4);
+      .recipe-section { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
     }
+
+    .chunks {
+      background: $surface-dark;
+      border-color: $border-dark;
+      .chunk { background: #3a3a3a; border-left-color: $accent; color: $muted-dark; }
+    }
+
+    .input-area {
+      background: $bg-dark;
+      border-top-color: $border-dark;
+      .input-wrapper {
+        background: $surface-dark;
+        border-color: $border-dark;
+        &:focus-within { border-color: $accent; box-shadow: 0 0 0 3px rgba($accent, 0.15); }
+        textarea { color: $text-dark; &::placeholder { color: $muted-dark; } }
+      }
+      .input-hint { color: $muted-dark; }
+    }
+
+    .messages-container::-webkit-scrollbar-thumb { background: $border-dark; }
   }
 }
 
+// ── Shared icon button ─────────────────────────────────────
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $muted-light;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  &:hover { background: rgba(0,0,0,0.06); }
+}
+
+// ── Sidebar ────────────────────────────────────────────────
 .sidebar {
-  width: 260px;
-  background: white;
-  border-right: 1px solid #e5e7eb;
+  width: $sidebar-w;
+  background: #f9f9f9;
+  border-right: 1px solid $border-light;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s ease;
-  position: relative;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
 
-  &.collapsed {
-    width: 0;
-    min-width: 0;
-    border-right: none;
-    overflow: hidden;
+  &.collapsed { width: 0; opacity: 0; border-right: none; }
+
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 0.5rem;
   }
 
-  .new-chat-btn {
-    margin: 1rem;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    background: white;
-    color: #111827;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+  .brand {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    .brand-icon { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+    .brand-name { font-size: 1.1rem; font-weight: 700; color: $text-light; }
+  }
 
-    span { font-size: 1.25rem; }
+  .new-chat-btn {
+    margin: 0.75rem 0.75rem 0.5rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid $border-light;
+    border-radius: $radius;
+    background: transparent;
+    color: $text-light;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+    white-space: nowrap;
+    .new-chat-icon { font-size: 1rem; }
+    &:hover { background: $border-light; }
+  }
 
-    &:hover {
-      background: #f3f4f6;
-    }
+  .sidebar-section-label {
+    padding: 0.75rem 1rem 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $muted-light;
   }
 
   .chat-list {
@@ -153,350 +197,385 @@
 
     .chat-item {
       width: 100%;
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.25rem;
+      padding: 0.6rem 0.75rem;
+      margin-bottom: 2px;
       border: none;
       border-radius: 8px;
       background: transparent;
       color: #374151;
       text-align: left;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       cursor: pointer;
-      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
 
-      &:hover {
-        background: #f3f4f6;
-      }
+      .chat-item-icon { font-size: 0.9rem; flex-shrink: 0; }
+      .chat-item-label { overflow: hidden; text-overflow: ellipsis; }
 
-      &.active {
-        background: #667eea;
-        color: white;
-      }
+      &:hover { background: $border-light; }
+      &.active { background: rgba($accent, 0.12); color: $accent-dark; font-weight: 500; }
+    }
+  }
+
+  .sidebar-footer {
+    padding: 1rem;
+    .chef-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      background: rgba($accent, 0.08);
+      border: 1px solid rgba($accent, 0.2);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: $accent-dark;
+      font-weight: 500;
     }
   }
 }
 
+// ── Main content ───────────────────────────────────────────
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 0;
 }
 
-.chat-header {
-  padding: 1rem 2rem;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  position: relative;
-  transition: all 0.3s;
+// ── Top bar ────────────────────────────────────────────────
+.topbar {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: $bg-light;
+  border-bottom: 1px solid $border-light;
+  flex-shrink: 0;
 
-  .sidebar-toggle {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
+  .topbar-title {
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.05);
-    }
-  }
-
-  h1 {
-    margin: 0;
-    font-size: 1.5rem;
+    gap: 0.5rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: #111827;
-    transition: color 0.3s;
+    color: $text-light;
+    .topbar-emoji { font-size: 1.25rem; }
   }
 
-  p {
-    margin: 0.25rem 0 0;
-    color: #6b7280;
-    font-size: 0.875rem;
-    transition: color 0.3s;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .theme-toggle {
-    position: absolute;
-    top: 50%;
-    right: 2rem;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.05);
-    }
-  }
+  .theme-btn { font-size: 1.2rem; }
 }
 
+// ── Messages ───────────────────────────────────────────────
 .messages-container {
   flex: 1;
   overflow-y: auto;
+  padding: 1.5rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: $border-light; border-radius: 3px; }
+}
+
+// ── Welcome screen ─────────────────────────────────────────
+.welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #d1d5db;
-    border-radius: 4px;
-  }
-}
-
-.welcome {
   text-align: center;
-  color: #374151;
-  margin-top: 8rem;
-  max-width: 600px;
+  margin: auto;
+  padding: 2rem 1rem;
+  max-width: 640px;
 
-  .welcome-icon {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
+  .welcome-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    border: 3px solid rgba($accent, 0.3);
+    box-shadow: 0 4px 20px rgba($accent, 0.25);
+    img { width: 100%; height: 100%; object-fit: cover; }
   }
 
   h2 {
-    font-size: 2rem;
-    margin: 0 0 1rem;
-    font-weight: 600;
-    color: #111827;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $text-light;
+    margin-bottom: 0.75rem;
   }
 
   p {
-    color: #6b7280;
+    color: $muted-light;
     font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+
+    .chip {
+      padding: 0.55rem 1rem;
+      border: 1px solid $border-light;
+      border-radius: 999px;
+      background: $bg-light;
+      color: $text-light;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      &:hover {
+        background: rgba($accent, 0.08);
+        border-color: $accent;
+        color: $accent-dark;
+      }
+    }
   }
 }
 
+// ── Message rows ───────────────────────────────────────────
 .message {
-  width: 100%;
   display: flex;
   justify-content: center;
-  padding: 2rem 1rem;
-  animation: slideIn 0.3s ease;
-
-  &.user {
-    background: white;
-  }
-
-  &.assistant {
-    background: #f9fafb;
-  }
+  padding: 0.5rem 0;
+  animation: fadeUp 0.25s ease;
 
   .message-inner {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     width: 100%;
-    max-width: 800px;
+    max-width: 760px;
+    align-items: flex-start;
   }
 
   .avatar {
-    font-size: 1.75rem;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: $surface-light;
+    border: 1px solid $border-light;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.1rem;
     flex-shrink: 0;
+    margin-top: 2px;
+    overflow: hidden;
+
+    img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    &.chef-avatar {
+      background: linear-gradient(135deg, #ff8c42, $accent);
+      border-color: $accent;
+      padding: 2px;
+    }
+  }
+
+  .bubble {
+    flex: 1;
+    min-width: 0;
+
+    .sender-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: $muted-light;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  &.user .bubble {
+    background: $surface-light;
+    border-radius: $radius;
+    padding: 0.875rem 1.1rem;
+    .sender-name { color: $muted-light; }
+  }
+
+  &.assistant .bubble {
+    background: transparent;
+    padding: 0 0.25rem;
   }
 
   .content {
-    flex: 1;
-    line-height: 1.7;
-    color: #374151;
     font-size: 0.95rem;
+    line-height: 1.75;
+    color: $text-light;
 
+    // ── Markdown text ──────────────────────────────────────
     .text {
-      margin-bottom: 0.5rem;
-
       h1, h2, h3 {
-        margin: 1.5rem 0 1rem;
-        font-weight: 600;
-        color: inherit;
+        font-weight: 700;
+        margin: 1.25rem 0 0.6rem;
+        color: $text-light;
+        line-height: 1.3;
+      }
+      h1 { font-size: 1.4rem; }
+      h2 { font-size: 1.2rem; }
+      h3 {
+        font-size: 1.05rem;
+        color: $accent-dark;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        &::before { content: ''; display: block; width: 3px; height: 1em; background: $accent; border-radius: 2px; }
       }
 
-      h1 { font-size: 1.5rem; }
-      h2 { font-size: 1.3rem; }
-      h3 { font-size: 1.15rem; }
+      p { margin: 0.6rem 0; }
 
-      ul {
-        margin: 0.75rem 0;
+      ul, ol {
+        margin: 0.6rem 0;
         padding-left: 1.5rem;
-
         li {
-          margin-bottom: 0.5rem;
-          line-height: 1.6;
+          margin-bottom: 0.4rem;
+          line-height: 1.65;
+          &::marker { color: $accent; font-weight: 600; }
         }
       }
 
-      p {
-        margin: 0.75rem 0;
-        line-height: 1.7;
-      }
+      strong { font-weight: 600; color: $text-light; }
 
       hr {
-        margin: 1.5rem 0;
+        margin: 1.25rem 0;
         border: none;
-        border-top: 2px solid #e5e7eb;
-      }
-
-      strong {
-        font-weight: 600;
-        color: #667eea;
+        border-top: 1px solid $border-light;
       }
     }
 
+    // ── Recipe card ────────────────────────────────────────
     .recipe-card {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(145deg, #fff8f4, #fff1e8);
+      border: 1px solid rgba($accent, 0.25);
       border-radius: 16px;
-      padding: 2rem;
-      color: white;
-      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba($accent, 0.1);
 
-      .recipe-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin: 0 0 1rem;
-        text-align: center;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      .recipe-header {
+        background: linear-gradient(135deg, $accent, #c94f1a);
+        padding: 1.25rem 1.5rem;
+        .recipe-title {
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: white;
+          margin: 0;
+          text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
       }
 
       .recipe-intro {
-        text-align: center;
-        font-size: 1rem;
+        padding: 1rem 1.5rem 0;
+        color: #5a3a2a;
+        font-size: 0.95rem;
         line-height: 1.6;
-        margin-bottom: 1.5rem;
-        opacity: 0.95;
+        font-style: italic;
       }
 
       .recipe-section {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-
-        &:last-child { margin-bottom: 0; }
+        padding: 1.25rem 1.5rem;
+        border-top: 1px solid rgba($accent, 0.12);
 
         h4 {
-          font-size: 1.25rem;
-          font-weight: 600;
-          margin: 0 0 1rem;
+          font-size: 1rem;
+          font-weight: 700;
+          color: $accent-dark;
+          margin: 0 0 0.85rem;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.4rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-size: 0.85rem;
         }
 
-        .ingredients-list,
-        .instructions-list {
+        .ingredients-list {
+          list-style: none;
+          padding: 0;
           margin: 0;
-          padding-left: 1.5rem;
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 0.4rem;
 
           li {
-            margin-bottom: 0.75rem;
-            line-height: 1.6;
-            font-size: 0.95rem;
-
-            &::marker { font-weight: 600; }
-
-            strong {
-              font-weight: 600;
-            }
+            background: white;
+            border: 1px solid rgba($accent, 0.15);
+            border-radius: 8px;
+            padding: 0.45rem 0.75rem;
+            font-size: 0.875rem;
+            color: #3a2a1a;
+            strong { color: $accent-dark; font-weight: 600; }
           }
         }
 
-        .instructions-list li {
-          padding-left: 0.5rem;
+        .instructions-list {
+          padding-left: 1.25rem;
+          margin: 0;
+          li {
+            margin-bottom: 0.85rem;
+            font-size: 0.9rem;
+            color: #3a2a1a;
+            line-height: 1.65;
+            &::marker { color: $accent; font-weight: 700; }
+            strong { color: $accent-dark; }
+          }
         }
       }
     }
 
+    // ── Sources ────────────────────────────────────────────
     .chunks {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
+      margin-top: 1.25rem;
+      padding: 0.875rem 1rem;
+      background: $surface-light;
+      border: 1px solid $border-light;
+      border-radius: $radius;
 
       .chunks-header {
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-        color: #111827;
-        font-size: 0.875rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $muted-light;
+        margin-bottom: 0.6rem;
       }
 
       .chunk {
-        background: #f3f4f6;
-        padding: 0.75rem;
-        margin: 0.5rem 0;
-        border-radius: 6px;
-        font-size: 0.85rem;
-        color: #4b5563;
-        border-left: 3px solid #667eea;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 0.5rem;
-
-        strong {
-          flex: 1;
-          color: #111827;
-        }
-
-        a {
-          color: #667eea;
-          text-decoration: none;
-          font-size: 0.8rem;
-          white-space: nowrap;
-          transition: color 0.2s;
-
-          &:hover {
-            color: #5568d3;
-            text-decoration: underline;
-          }
-        }
+        padding: 0.5rem 0.75rem;
+        margin: 0.3rem 0;
+        background: white;
+        border-radius: 8px;
+        border-left: 3px solid $accent;
+        font-size: 0.85rem;
+        strong { color: $text-light; }
+        a { color: $accent; text-decoration: none; font-size: 0.8rem; &:hover { text-decoration: underline; } }
       }
     }
 
+    // ── Loading dots ───────────────────────────────────────
     &.loading {
       display: flex;
-      gap: 0.5rem;
-      padding: 1rem 0;
-
+      gap: 5px;
+      padding: 0.5rem 0;
       span {
         width: 8px;
         height: 8px;
-        background: #9ca3af;
+        background: $accent;
         border-radius: 50%;
-        animation: bounce 1.4s infinite ease-in-out both;
-
+        opacity: 0.6;
+        animation: bounce 1.2s infinite ease-in-out both;
         &:nth-child(1) { animation-delay: -0.32s; }
         &:nth-child(2) { animation-delay: -0.16s; }
       }
@@ -504,85 +583,81 @@
   }
 }
 
-.input-container {
+// ── Input area ─────────────────────────────────────────────
+.input-area {
+  padding: 1rem 1.25rem 0.75rem;
+  background: $bg-light;
+  border-top: 1px solid $border-light;
   display: flex;
-  justify-content: center;
-  padding: 1.5rem;
-  background: white;
-  border-top: 1px solid #e5e7eb;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
 
   .input-wrapper {
     display: flex;
-    gap: 0.75rem;
-    width: 100%;
-    max-width: 800px;
     align-items: flex-end;
-  }
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 760px;
+    background: $bg-light;
+    border: 1.5px solid $border-light;
+    border-radius: 14px;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 
-  textarea {
-    flex: 1;
-    padding: 0.875rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-family: inherit;
-    resize: none;
-    max-height: 200px;
-    background: white;
-    color: #111827;
-    transition: border-color 0.2s;
+    &:focus-within {
+      border-color: $accent;
+      box-shadow: 0 0 0 3px rgba($accent, 0.12);
+    }
 
-    &:focus {
+    textarea {
+      flex: 1;
+      border: none;
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      background: transparent;
+      font-size: 0.95rem;
+      font-family: inherit;
+      resize: none;
+      max-height: 180px;
+      color: $text-light;
+      line-height: 1.5;
+      padding: 0.25rem 0;
+      &::placeholder { color: #aaa; }
     }
 
-    &::placeholder {
-      color: #9ca3af;
+    .send-btn {
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 10px;
+      background: $accent;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+
+      &:hover:not(:disabled) { background: $accent-dark; transform: scale(1.05); }
+      &:disabled { opacity: 0.4; cursor: not-allowed; }
     }
   }
 
-  button {
-    width: 44px;
-    height: 44px;
-    border: none;
-    border-radius: 10px;
-    background: #667eea;
-    color: white;
-    font-size: 1.25rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    flex-shrink: 0;
-
-    &:hover:not(:disabled) {
-      background: #5568d3;
-      transform: translateY(-1px);
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+  .input-hint {
+    font-size: 0.75rem;
+    color: $muted-light;
   }
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+// ── Animations ─────────────────────────────────────────────
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
+  0%, 80%, 100% { transform: scale(0.6); }
+  40%           { transform: scale(1); }
 }

@@ -1,124 +1,178 @@
 <div class="chat-container" [class.dark]="isDark()">
+
+  <!-- Sidebar -->
   <div class="sidebar" [class.collapsed]="!sidebarOpen()">
+    <div class="sidebar-header">
+      <div class="brand">
+        <img class="brand-icon" src="chef-avatar.svg" alt="Chef AI" />
+        <span class="brand-name">Chef AI</span>
+      </div>
+      <button class="icon-btn" (click)="toggleSidebar()" title="Close sidebar">✕</button>
+    </div>
+
     <button class="new-chat-btn" (click)="startNewChat()">
-      <span>+</span> New Chat
+      <span class="new-chat-icon">✏️</span>
+      New Conversation
     </button>
+
+    <div class="sidebar-section-label">Recent Chats</div>
     <div class="chat-list">
       @for (chat of chats(); track chat.id) {
-        <button 
-          class="chat-item" 
+        <button
+          class="chat-item"
           [class.active]="currentChatId() === chat.id"
           (click)="switchChat(chat.id)"
         >
-          {{ chat.label }}
+          <span class="chat-item-icon">💬</span>
+          <span class="chat-item-label">{{ chat.label }}</span>
         </button>
       }
     </div>
+
+    <div class="sidebar-footer">
+      <div class="chef-badge">
+        <span>🌶️</span>
+        <span>South Asian Cuisine Specialist</span>
+      </div>
+    </div>
   </div>
 
+  <!-- Main -->
   <div class="main-content">
-    <div class="chat-header">
-      <button class="sidebar-toggle" (click)="toggleSidebar()">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <button class="icon-btn" (click)="toggleSidebar()" title="Toggle sidebar">
         {{ sidebarOpen() ? '✕' : '☰' }}
       </button>
-      <h1>🍳 Culinary Assistant</h1>
-      <p>Your AI-powered cooking companion</p>
-      <button class="theme-toggle" (click)="toggleTheme()">
+      <div class="topbar-title">
+        <span class="topbar-emoji">🍛</span>
+        <span>South Asian Culinary Assistant</span>
+      </div>
+      <button class="icon-btn theme-btn" (click)="toggleTheme()" title="Toggle theme">
         {{ isDark() ? '☀️' : '🌙' }}
       </button>
     </div>
 
-  <div class="messages-container">
-    @if (messages().length === 0) {
-      <div class="welcome">
-        <div class="welcome-icon">👨🍳</div>
-        <h2>Welcome to Culinary Assistant!</h2>
-        <p>Ask me anything about recipes, cooking techniques, or ingredients.</p>
-      </div>
-    }
-    
-    @for (message of messages(); track $index) {
-      <div class="message" [class.user]="message.role === 'user'" [class.assistant]="message.role === 'assistant'">
-        <div class="message-inner">
-          <div class="avatar">{{ message.role === 'user' ? '👤' : '🤖' }}</div>
-          <div class="content">
-            @let formatted = message.content | recipeFormatter;
-            @if (formatted.type === 'recipe') {
-              <div class="recipe-card">
-                <h3 class="recipe-title">{{ formatted.data.title }}</h3>
-                @if (formatted.data.intro) {
-                  <p class="recipe-intro">{{ formatted.data.intro }}</p>
-                }
-                <div class="recipe-section">
-                  <h4>🥘 Ingredients</h4>
-                  <ul class="ingredients-list">
-                    @for (ingredient of formatted.data.ingredients; track $index) {
-                      @if (ingredient.name) {
-                        <li><strong>{{ ingredient.name }}:</strong> {{ ingredient.amount }}</li>
-                      } @else {
-                        <li>{{ ingredient }}</li>
-                      }
+    <!-- Messages -->
+    <div class="messages-container">
+      @if (messages().length === 0) {
+        <div class="welcome">
+          <div class="welcome-avatar">
+            <img src="chef-avatar.svg" alt="Chef AI" />
+          </div>
+          <h2>Assalamu Alaikum! I'm Chef AI</h2>
+          <p>Your personal South Asian culinary expert. Ask me for recipes, cooking tips, or ingredient substitutions from Indian, Pakistani, Bangladeshi cuisines and more.</p>
+          <div class="suggestion-chips">
+            <button class="chip" (click)="userInput.set('How do I make Chicken Biryani?')">🍗 Chicken Biryani</button>
+            <button class="chip" (click)="userInput.set('What is Dal Makhani?')">🫘 Dal Makhani</button>
+            <button class="chip" (click)="userInput.set('Give me a quick Aloo Paratha recipe')">🫓 Aloo Paratha</button>
+            <button class="chip" (click)="userInput.set('What spices are used in Garam Masala?')">🌶️ Garam Masala</button>
+          </div>
+        </div>
+      }
+
+      @for (message of messages(); track $index) {
+        <div class="message" [class.user]="message.role === 'user'" [class.assistant]="message.role === 'assistant'">
+          <div class="message-inner">
+            <div class="avatar" [class.chef-avatar]="message.role === 'assistant'">
+              @if (message.role === 'assistant') {
+                <img src="chef-avatar.svg" alt="Chef AI" />
+              } @else {
+                👤
+              }
+            </div>
+            <div class="bubble">
+              <div class="sender-name">{{ message.role === 'user' ? 'You' : 'Chef AI' }}</div>
+              <div class="content">
+                @let formatted = message.content | recipeFormatter;
+                @if (formatted.type === 'recipe') {
+                  <div class="recipe-card">
+                    <div class="recipe-header">
+                      <h3 class="recipe-title">{{ formatted.data.title }}</h3>
+                    </div>
+                    @if (formatted.data.intro) {
+                      <p class="recipe-intro">{{ formatted.data.intro }}</p>
                     }
-                  </ul>
-                </div>
-                <div class="recipe-section">
-                  <h4>👨🍳 Instructions</h4>
-                  <ol class="instructions-list">
-                    @for (instruction of formatted.data.instructions; track $index) {
-                      <li>
-                        @if (instruction.title) {
-                          <strong>{{ instruction.title }}:</strong> {{ instruction.text }}
-                        } @else {
-                          {{ instruction.text || instruction }}
+                    <div class="recipe-section">
+                      <h4><span>🥘</span> Ingredients</h4>
+                      <ul class="ingredients-list">
+                        @for (ingredient of formatted.data.ingredients; track $index) {
+                          @if (ingredient.name) {
+                            <li><strong>{{ ingredient.name }}:</strong> {{ ingredient.amount }}</li>
+                          } @else {
+                            <li>{{ ingredient }}</li>
+                          }
                         }
-                      </li>
+                      </ul>
+                    </div>
+                    <div class="recipe-section">
+                      <h4><span>📋</span> Instructions</h4>
+                      <ol class="instructions-list">
+                        @for (instruction of formatted.data.instructions; track $index) {
+                          <li>
+                            @if (instruction.title) {
+                              <strong>{{ instruction.title }}:</strong> {{ instruction.text }}
+                            } @else {
+                              {{ instruction.text || instruction }}
+                            }
+                          </li>
+                        }
+                      </ol>
+                    </div>
+                  </div>
+                } @else {
+                  <div class="text" [innerHTML]="message.content | markdownToHtml"></div>
+                }
+                @if (message.chunks && message.chunks.length > 0) {
+                  <div class="chunks">
+                    <div class="chunks-header">📚 Sources</div>
+                    @for (chunk of message.chunks; track $index) {
+                      <div class="chunk">
+                        <strong>{{ chunk.dish_name }}</strong>
+                        <a [href]="chunk.source_url" target="_blank" rel="noopener noreferrer">🔗 View</a>
+                      </div>
                     }
-                  </ol>
-                </div>
-              </div>
-            } @else {
-              <div class="text" [innerHTML]="message.content | markdownToHtml"></div>
-            }
-            @if (message.chunks && message.chunks.length > 0) {
-              <div class="chunks">
-                <div class="chunks-header">📚 Sources Used:</div>
-                @for (chunk of message.chunks; track $index) {
-                  <div class="chunk">
-                    <strong>{{ chunk.dish_name }}</strong>
-                    <a [href]="chunk.source_url" target="_blank" rel="noopener noreferrer">🔗 View Source</a>
                   </div>
                 }
               </div>
-            }
+            </div>
           </div>
         </div>
-      </div>
-    }
+      }
 
-    @if (isLoading()) {
-      <div class="message assistant">
-        <div class="message-inner">
-          <div class="avatar">🤖</div>
-          <div class="content loading">
-            <span></span><span></span><span></span>
+      @if (isLoading()) {
+        <div class="message assistant">
+          <div class="message-inner">
+            <div class="avatar chef-avatar">
+              <img src="chef-avatar.svg" alt="Chef AI" />
+            </div>
+            <div class="bubble">
+              <div class="sender-name">Chef AI</div>
+              <div class="content loading">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    }
-  </div>
-
-  <div class="input-container">
-    <div class="input-wrapper">
-      <textarea 
-        [(ngModel)]="userInput"
-        (keypress)="handleKeyPress($event)"
-        placeholder="Ask about recipes, ingredients, cooking tips..."
-        rows="1"
-      ></textarea>
-      <button (click)="sendMessage()" [disabled]="!userInput().trim() || isLoading()">
-        <span>{{ isLoading() ? '⏳' : '➤' }}</span>
-      </button>
+      }
     </div>
-  </div>
+
+    <!-- Input -->
+    <div class="input-area">
+      <div class="input-wrapper">
+        <textarea
+          [(ngModel)]="userInput"
+          (keypress)="handleKeyPress($event)"
+          placeholder="Ask Chef AI about South Asian recipes, spices, techniques..."
+          rows="1"
+        ></textarea>
+        <button class="send-btn" (click)="sendMessage()" [disabled]="!userInput().trim() || isLoading()">
+          {{ isLoading() ? '⏳' : '➤' }}
+        </button>
+      </div>
+      <p class="input-hint">Chef AI specialises in South Asian cuisine 🌶️</p>
+    </div>
+
   </div>
 </div>
