@@ -145,7 +145,7 @@ def retrieve_node(state: GraphState):
 
     print(f"--- [FAISS] Searching: '{retrieval_query}' | Filters: {search_filters} ---")
 
-    SIMILARITY_THRESHOLD = 0.700 
+    SIMILARITY_THRESHOLD = 0.6500
     flavor_pref = extracted.get("flavor_preference", "unknown")
 
     def get_valid_docs(query, filters=None):
@@ -157,7 +157,7 @@ def retrieve_node(state: GraphState):
         valid = []
         for doc, l2_dist in results:
             cosine_sim = 1.0 - (l2_dist / 2.0)
-            dish_name = doc.metadata.get('dish_name', 'Unknown')
+            dish_name = doc.metadata.get('title', 'Unknown')
             dish_type = doc.metadata.get("dish_type", "unknown")
             
             # --- THE BOUNCER (Kept intact) ---
@@ -202,9 +202,8 @@ def out_of_bounds_node(state: GraphState):
 
 def generate_recipe_node(state: GraphState):
     """
-    Passes the strict FAISS chunks specifically to the local Qwen 2.5 0.5B model 
-    via Ollama so it can construct a beautiful, coherent response.
-    We append the URLs using Python at the very end to guarantee they aren't broken.
+    Extracts the un-fragmented recipe JSON from FAISS metadata and passes it to Qwen 0.5B 
+    for strict Markdown formatting.
     """
     docs = state.get("raw_docs", [])
     question = state["question"]
@@ -212,37 +211,69 @@ def generate_recipe_node(state: GraphState):
     if not docs:
         return {"generation": "I'm sorry, I couldn't find a highly relevant recipe for that in my database right now. Could you check the spelling or try another dish?"}
 
-    # Format chunks for the LLM to read
-    context_str = ""
-    for i, doc in enumerate(docs):
-        context_str += f"[{i+1}] Dish: {doc.metadata.get('dish_name')} | Section: {doc.metadata.get('content_type', 'Text')}\n{doc.page_content}\n\n"
-
-    # SUMMARIZATION PROMPT FOR SMALL MODELS
-    system_prompt = """You are a helpful South Asian Culinary Assistant.
-Your task is to clean and beautify the provided Retrieved Database Chunks to answer the user's request.
-You MUST rely ONLY on the information in the chunks. Do NOT invent or guess any ingredients or steps.
-If the chunks offer multiple options or variations, beautify them (Meaning remove the unnecessary punctions, line and words).
-Format the output beautifully in Markdown."""
-
-    user_prompt = f"Retrieved Database Chunks:\n{context_str}\n\nUser Request: {question}"
-
-    print("--- [Ollama] Asking Qwen 0.5B to generate the final recipe... ---")
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt}
-    ]
+    # Since each document is now a FULL recipe, we only need the top 1 or 2 matches!
+    # This keeps Qwen incredibly fast and focused.
+    top_docs = docs[:2] 
     
-    # Using the local Qwen 0.5B model specifically for generation
-    raw_generation = call_chat_api(messages, model_id="qwen2.5:0.5b")
-    final_answer = raw_generation.strip() if raw_generation else "I had trouble generating the text, but here are the chunks I found."
+    print(f"--- [Ollama] Asking Qwen 0.5B to format {len(top_docs)} full recipes... ---")
+    
+    formatted_chunks = []
+    
+    for i, doc in enumerate(top_docs):
+        title = doc.metadata.get("title", "Unknown Dish")
+        
+        # 1. Safely parse the stringified JSON back into a usable Python dictionary
+        recipe_str = doc.metadata.get("recipe_json", "{}")
+        try:
+            recipe_data = json.loads(recipe_str)
+        except json.JSONDecodeError:
+            print(f"[ERROR] Failed to parse JSON metadata for {title}")
+            recipe_data = {"intro": "", "ingredients": [], "instructions": []}
+            
+        # 2. Build a super clean, structured string for Qwen to read
+        raw_text = f"Dish: {title}\n\n"
+        raw_text += f"Intro: {recipe_data.get('intro', '')}\n\n"
+        
+        raw_text += "Ingredients:\n"
+        for item in recipe_data.get('ingredients', []):
+            raw_text += f"- {item}\n"
+            
+        raw_text += "\nInstructions:\n"
+        for step in recipe_data.get('instructions', []):
+            raw_text += f"- {step}\n"
 
-    # --- Append Authentic Sources (Kept intact) ---
+        # 3. Prompt Qwen to make it look professional
+        system_prompt = """You are a precise Markdown Formatting Assistant.
+Your ONLY job is to take the provided recipe data and format it into beautiful Markdown.
+- Use bolding for headings (like **Introduction**, **Ingredients**, **Instructions**).
+- Use bullet points for ingredients and numbered lists for instructions.
+- Do NOT invent, guess, or leave out ANY details from the provided text.
+- Output ONLY the formatted recipe."""
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": f"Recipe Data to format:\n{raw_text}"}
+        ]
+        
+        # Call Ollama for this specific recipe
+        chunk_generation = call_chat_api(messages, model_id="qwen2.5:0.5b")
+        
+        if chunk_generation:
+            formatted_chunks.append(chunk_generation.strip())
+        else:
+            # Fallback to the raw string if the LLM fails
+            formatted_chunks.append(raw_text.strip())
+
+    # Join the fully formatted recipes together
+    final_answer = "Here is what I found for you:\n\n" + "\n\n---\n\n".join(formatted_chunks)
+
+    # --- Append Authentic Sources cleanly using Python ---
     source_links = []
-    for doc in docs:
+    for doc in top_docs:
         url = doc.metadata.get("source_url", "")
-        dish_name = doc.metadata.get("dish_name", "Unknown Dish")
+        dish_title = doc.metadata.get("title", "Unknown Dish")
         if url:
-            source_links.append(f"- [{dish_name}]({url})")
+            source_links.append(f"- [{dish_title}]({url})")
 
     unique_links = list(dict.fromkeys(source_links))
     if unique_links:
@@ -300,7 +331,7 @@ def get_assistant_response(user_input: str, chat_history: list) -> dict:
         
         for doc in raw_docs:
             structured_chunks.append({
-                "dish_name": doc.metadata.get("dish_name", "Unknown Dish"),
+                "dish_name": doc.metadata.get("title", "Unknown Dish"),
                 "content_type": doc.metadata.get("content_type", "Text").title(),
                 "content": doc.page_content,
                 "source_url": doc.metadata.get("source_url", "")
