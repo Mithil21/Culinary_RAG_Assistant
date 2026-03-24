@@ -16,14 +16,14 @@ from huggingface_hub import login  # <-- NEW: Imported for auto-login
 # ==========================================
 # Replace "YOUR_HF_TOKEN_HERE" with your actual Hugging Face token, 
 # or set it as an environment variable named HF_TOKEN.
-HF_TOKEN = os.environ.get("HF_TOKEN", "<YOUR_HF_TOKEN_HERE>")
+# HF_TOKEN = os.environ.get("HF_TOKEN", "<YOUR_HF_TOKEN_HERE>")
 
-if HF_TOKEN and HF_TOKEN != "YOUR_HF_TOKEN_HERE":
-    print("Authenticating with Hugging Face...")
-    login(token=HF_TOKEN)
-else:
-    print("\n[WARNING] No Hugging Face token provided.")
-    print("If you haven't logged in via CLI, gated models like Llama-3.2-3B may fail to load.\n")
+# if HF_TOKEN and HF_TOKEN != "YOUR_HF_TOKEN_HERE":
+#     print("Authenticating with Hugging Face...")
+#     login(token=HF_TOKEN)
+# else:
+#     print("\n[WARNING] No Hugging Face token provided.")
+#     print("If you haven't logged in via CLI, gated models like Llama-3.2-3B may fail to load.\n")
 
 # ==========================================
 # 1. LOCAL MODEL & DB INITIALIZATION
