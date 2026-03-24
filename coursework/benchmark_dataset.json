@@ -1,0 +1,107 @@
+[
+  {
+    "id": "q01",
+    "query": "How do I make chicken biryani?",
+    "expected_dishes": ["Chicken Biryani", "Hyderabad Biryani", "Katchi Biryani"],
+    "expected_intent": "RECIPE_REQUEST",
+    "category": "specific_recipe"
+  },
+  {
+    "id": "q02",
+    "query": "butter chicken recipe",
+    "expected_dishes": ["Indian Butter Chicken I"],
+    "expected_intent": "DISH_QUERY",
+    "category": "specific_recipe"
+  },
+  {
+    "id": "q03",
+    "query": "dal makhani",
+    "expected_dishes": ["Dal Makhani (Black Gram with Cream)"],
+    "expected_intent": "DISH_QUERY",
+    "category": "specific_recipe"
+  },
+  {
+    "id": "q04",
+    "query": "How to make chapati?",
+    "expected_dishes": ["Chapati"],
+    "expected_intent": "RECIPE_REQUEST",
+    "category": "specific_recipe"
+  },
+  {
+    "id": "q05",
+    "query": "gulab jamun recipe",
+    "expected_dishes": ["Gulab Jamun (Fried Milk Balls in Syrup)"],
+    "expected_intent": "DISH_QUERY",
+    "category": "specific_recipe"
+  },
+  {
+    "id": "q06",
+    "query": "chicken tikka masala",
+    "expected_dishes": ["Chicken Tikka Masala", "Chicken Tikka"],
+    "expected_intent": "DISH_QUERY",
+    "category": "specific_recipe"
+  },
+  {
+    "id": "q07",
+    "query": "quick vegetarian snack",
+    "expected_dishes": ["Bonda (South Indian Vegetable Fritter)", "Deep Fried Chickpea Dough Curry Snacks (Pakoda)"],
+    "expected_intent": "RECIPE_REQUEST",
+    "category": "filtered_request"
+  },
+  {
+    "id": "q08",
+    "query": "spicy non-veg curry",
+    "expected_dishes": ["Chicken Vindaloo", "Chicken Madras", "Malvani Chicken Curry"],
+    "expected_intent": "RECIPE_REQUEST",
+    "category": "filtered_request"
+  },
+  {
+    "id": "q09",
+    "query": "sweet dessert South Asian",
+    "expected_dishes": ["Kheer (Rice Pudding)", "Gulab Jamun (Fried Milk Balls in Syrup)", "Kulfi (South Asian Frozen Custard)"],
+    "expected_intent": "RECIPE_REQUEST",
+    "category": "filtered_request"
+  },
+  {
+    "id": "q10",
+    "query": "rice, lentils, turmeric",
+    "expected_dishes": ["Khichdi (South Asian Rice and Lentils)", "Bhuna Khichuri (Bengali Rice and Lentils)"],
+    "expected_intent": "INGREDIENTS_ONLY",
+    "category": "ingredients_only"
+  },
+  {
+    "id": "q11",
+    "query": "milk, sugar, cardamom",
+    "expected_dishes": [],
+    "expected_intent": "INGREDIENTS_ONLY",
+    "category": "ingredients_only"
+  },
+  {
+    "id": "q12",
+    "query": "surprise me",
+    "expected_dishes": [],
+    "expected_intent": "VAGUE_REQUEST",
+    "category": "vague"
+  },
+  {
+    "id": "q13",
+    "query": "How do I make pizza?",
+    "expected_dishes": [],
+    "expected_intent": "NON_SOUTH_ASIAN",
+    "category": "out_of_bounds"
+  },
+  {
+    "id": "q14",
+    "query": "I want sushi",
+    "expected_dishes": [],
+    "expected_intent": "NON_SOUTH_ASIAN",
+    "category": "out_of_bounds"
+  },
+  {
+    "id": "q15",
+    "query": "kheer recipe",
+    "expected_dishes": ["Kheer (Rice Pudding)"],
+    "expected_intent": "DISH_QUERY",
+    "category": "specific_recipe"
+  }
+]

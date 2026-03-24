@@ -1,0 +1,19 @@
+# Core AI / RAG
+torch
+transformers
+langgraph
+langchain
+langchain-community
+langchain-huggingface
+faiss-cpu
+sentence-transformers
+
+# Models
+accelerate
+
+# Backend
+django
+djangorestframework
+
+# Frontend (coursework demo)
+streamlit
