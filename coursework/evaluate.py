@@ -73,7 +73,10 @@ def run_evaluation():
         response = get_assistant_response(query, chat_history=[])
         latency  = round(time.time() - t0, 3)
 
-        retrieved_dishes = response.get("selected_dishes", [])
+        # --- FIX: Extract dish names from the nested chunks list ---
+        chunks = response.get("chunks", [])
+        retrieved_dishes = [chunk.get("dish_name") for chunk in chunks if chunk.get("dish_name")]
+        
         predicted_intent = response.get("intent", "UNKNOWN")
         answer           = response.get("answer", "")
 

@@ -1,0 +1,300 @@
+{
+  "evaluation_summary": {
+    "total_queries": 15,
+    "mean_recall@3": 0.697,
+    "intent_accuracy": 0.3333,
+    "mean_latency_seconds": 33.32,
+    "min_latency_seconds": 7.289,
+    "max_latency_seconds": 56.711
+  },
+  "per_query_results": [
+    {
+      "id": "q01",
+      "query": "How do I make chicken biryani?",
+      "category": "specific_recipe",
+      "expected_intent": "RECIPE_REQUEST",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": true,
+      "expected_dishes": [
+        "Chicken Biryani",
+        "Hyderabad Biryani",
+        "Katchi Biryani"
+      ],
+      "retrieved_dishes": [
+        "Chicken Biryani",
+        "Katchi Biryani",
+        "Sylheti Biryani",
+        "Murghi Korma (Chicken Korma)",
+        "Murgh Musallam (Indian Stewed Spiced Chicken)"
+      ],
+      "recall@3": 0.6667,
+      "latency_seconds": 56.711,
+      "answer_preview": "Here is what I found for you:  # Dish: Chicken Biryani  ## Introduction Chicken Biryani is a popular Indian dish that combines rice with marinated chicken, spices, and aromatic vegetables. It's known "
+    },
+    {
+      "id": "q02",
+      "query": "butter chicken recipe",
+      "category": "specific_recipe",
+      "expected_intent": "DISH_QUERY",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [
+        "Indian Butter Chicken I"
+      ],
+      "retrieved_dishes": [
+        "Indian Butter Chicken I",
+        "Chicken Madras",
+        "Chicken Curry",
+        "Murgh Musallam (Indian Stewed Spiced Chicken)",
+        "Murghi Korma (Chicken Korma)"
+      ],
+      "recall@3": 1.0,
+      "latency_seconds": 50.881,
+      "answer_preview": "Here is what I found for you:  # Dish: Indian Butter Chicken I  ## Introduction Butter chicken or murgh makhani is an Indian dish popular in countries around the world where Indian restaurants are fou"
+    },
+    {
+      "id": "q03",
+      "query": "dal makhani",
+      "category": "specific_recipe",
+      "expected_intent": "DISH_QUERY",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [
+        "Dal Makhani (Black Gram with Cream)"
+      ],
+      "retrieved_dishes": [
+        "Dal Makhani (Black Gram with Cream)"
+      ],
+      "recall@3": 1.0,
+      "latency_seconds": 35.899,
+      "answer_preview": "Here is what I found for you:  # Dish: Dal Makhani (Black Gram with Cream)  ## Introduction Dal Makhani is a traditional Indian dish that originated in Punjab, India. The dish is characterized by its "
+    },
+    {
+      "id": "q04",
+      "query": "How to make chapati?",
+      "category": "specific_recipe",
+      "expected_intent": "RECIPE_REQUEST",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": true,
+      "expected_dishes": [
+        "Chapati"
+      ],
+      "retrieved_dishes": [
+        "Chapati",
+        "Chickpea Curry (Masaledaar Chole)",
+        "Matar Paneer",
+        "Samosa",
+        "Papri Chaat (Crispy Indian Snack with Potato)"
+      ],
+      "recall@3": 1.0,
+      "latency_seconds": 34.872,
+      "answer_preview": "Here is what I found for you:  # Dish: Chapati  ## Introduction The chapati, also known as a roti, is the staple flat bread of Northern India and Pakistan. It can be made from many types of grain, but"
+    },
+    {
+      "id": "q05",
+      "query": "gulab jamun recipe",
+      "category": "specific_recipe",
+      "expected_intent": "DISH_QUERY",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [
+        "Gulab Jamun (Fried Milk Balls in Syrup)"
+      ],
+      "retrieved_dishes": [
+        "Gulab Jamun (Fried Milk Balls in Syrup)",
+        "Dum ka Qimah (Spiced Minced Meat)",
+        "Upma (Indian Semolina Porridge)",
+        "Pigeon Pea and Fenugreek Curry (Methi Tadka Dal)",
+        "Khatti Dal (Spiced Tamarind Pigeon Peas)"
+      ],
+      "recall@3": 1.0,
+      "latency_seconds": 47.591,
+      "answer_preview": "Here is what I found for you:  # Dish: Gulab Jamun (Fried Milk Balls in Syrup) ## Introduction Gulab Jamun (Fried Milk Balls in Syrup) is a popular Indian and Pakistani sweet dish consisting of fried "
+    },
+    {
+      "id": "q06",
+      "query": "chicken tikka masala",
+      "category": "specific_recipe",
+      "expected_intent": "DISH_QUERY",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [
+        "Chicken Tikka Masala",
+        "Chicken Tikka"
+      ],
+      "retrieved_dishes": [
+        "Chicken Tikka Masala",
+        "Chicken Tikka",
+        "Tandoori Masala",
+        "Indian Butter Chicken I",
+        "Murgh Musallam (Indian Stewed Spiced Chicken)"
+      ],
+      "recall@3": 1.0,
+      "latency_seconds": 45.098,
+      "answer_preview": "Here is what I found for you:  # Dish: Chicken Tikka Masala  ## Introduction Chicken Tikka Masala is a dish based on chunks of Indian-style roasted chicken cooked in a tomato curry sauce, originating "
+    },
+    {
+      "id": "q07",
+      "query": "quick vegetarian snack",
+      "category": "filtered_request",
+      "expected_intent": "RECIPE_REQUEST",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": true,
+      "expected_dishes": [
+        "Bonda (South Indian Vegetable Fritter)",
+        "Deep Fried Chickpea Dough Curry Snacks (Pakoda)"
+      ],
+      "retrieved_dishes": [],
+      "recall@3": 0.0,
+      "latency_seconds": 11.897,
+      "answer_preview": "I'm sorry, I couldn't find a highly relevant recipe for that in my database right now. Could you check the spelling or try another dish?"
+    },
+    {
+      "id": "q08",
+      "query": "spicy non-veg curry",
+      "category": "filtered_request",
+      "expected_intent": "RECIPE_REQUEST",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": true,
+      "expected_dishes": [
+        "Chicken Vindaloo",
+        "Chicken Madras",
+        "Malvani Chicken Curry"
+      ],
+      "retrieved_dishes": [
+        "Sylheti Tangy Curry",
+        "Mango and Yellow Split Pea Curry",
+        "Pulse Chutney",
+        "Prawn Curry",
+        "Tadka Dhal (Spiced Lentil Curry) II"
+      ],
+      "recall@3": 0.0,
+      "latency_seconds": 41.666,
+      "answer_preview": "Here is what I found for you:  # Dish: Sylheti Tangy Curry  ## Intro Sylheti tangy curry, locally known as tenga, is a delightful and tangy tomato-based curry that originates from the Sylhet region of"
+    },
+    {
+      "id": "q09",
+      "query": "sweet dessert South Asian",
+      "category": "filtered_request",
+      "expected_intent": "RECIPE_REQUEST",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": true,
+      "expected_dishes": [
+        "Kheer (Rice Pudding)",
+        "Gulab Jamun (Fried Milk Balls in Syrup)",
+        "Kulfi (South Asian Frozen Custard)"
+      ],
+      "retrieved_dishes": [
+        "Sylheti Rice Pudding",
+        "Kesari (South Indian Semolina Pudding)",
+        "Malpua (South Asian Sweet Pancake)",
+        "Kulfi (South Asian Frozen Custard)",
+        "Rasmalai (Indian Cheese and Milk Dessert)"
+      ],
+      "recall@3": 0.0,
+      "latency_seconds": 34.875,
+      "answer_preview": "Here is what I found for you:  # Dish: Sylheti Rice Pudding  ## Intro Sylheti Rice Pudding, also known as kir shinni in the Sylhet region, is a delectable rice-based dessert that holds a special place"
+    },
+    {
+      "id": "q10",
+      "query": "rice, lentils, turmeric",
+      "category": "ingredients_only",
+      "expected_intent": "INGREDIENTS_ONLY",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [
+        "Khichdi (South Asian Rice and Lentils)",
+        "Bhuna Khichuri (Bengali Rice and Lentils)"
+      ],
+      "retrieved_dishes": [
+        "Khichdi (South Asian Rice and Lentils)",
+        "Lentil, Potato, and Tomato Curry",
+        "Bhuna Khichuri (Bengali Rice and Lentils)",
+        "Traditional Pilau Rice",
+        "Rice with Lemon Coconut and Eggplant (Vangibhat)"
+      ],
+      "recall@3": 1.0,
+      "latency_seconds": 30.202,
+      "answer_preview": "Here is what I found for you:  # Dish: Khichdi (South Asian Rice and Lentils)  ## Introduction Khichdi is a popular dish in the Indian state of Gujarat, where many families prefer it as a dinner. It's"
+    },
+    {
+      "id": "q11",
+      "query": "milk, sugar, cardamom",
+      "category": "ingredients_only",
+      "expected_intent": "INGREDIENTS_ONLY",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [],
+      "retrieved_dishes": [
+        "Rasmalai (Indian Cheese and Milk Dessert)",
+        "Indian Baked Yoghurt with Saffron and Cardamom",
+        "Masala Chai I",
+        "Gulab Jamun (Fried Milk Balls in Syrup)",
+        "Sweet Lassi"
+      ],
+      "recall@3": null,
+      "latency_seconds": 52.237,
+      "answer_preview": "Here is what I found for you:  # Rasmalai (Indian Cheese and Milk Dessert)  ## Introduction Rasmalai is a popular Indian milk-based dessert that combines cheese and milk flavors. It's often served as "
+    },
+    {
+      "id": "q12",
+      "query": "surprise me",
+      "category": "vague",
+      "expected_intent": "VAGUE_REQUEST",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [],
+      "retrieved_dishes": [],
+      "recall@3": null,
+      "latency_seconds": 12.672,
+      "answer_preview": "I'm sorry, I couldn't find a highly relevant recipe for that in my database right now. Could you check the spelling or try another dish?"
+    },
+    {
+      "id": "q13",
+      "query": "How do I make pizza?",
+      "category": "out_of_bounds",
+      "expected_intent": "NON_SOUTH_ASIAN",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [],
+      "retrieved_dishes": [],
+      "recall@3": null,
+      "latency_seconds": 8.229,
+      "answer_preview": "I'm sorry, I couldn't find a highly relevant recipe for that in my database right now. Could you check the spelling or try another dish?"
+    },
+    {
+      "id": "q14",
+      "query": "I want sushi",
+      "category": "out_of_bounds",
+      "expected_intent": "NON_SOUTH_ASIAN",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [],
+      "retrieved_dishes": [],
+      "recall@3": null,
+      "latency_seconds": 7.289,
+      "answer_preview": "I'm sorry, I couldn't find a highly relevant recipe for that in my database right now. Could you check the spelling or try another dish?"
+    },
+    {
+      "id": "q15",
+      "query": "kheer recipe",
+      "category": "specific_recipe",
+      "expected_intent": "DISH_QUERY",
+      "predicted_intent": "RECIPE_REQUEST",
+      "intent_correct": false,
+      "expected_dishes": [
+        "Kheer (Rice Pudding)"
+      ],
+      "retrieved_dishes": [
+        "Kheer (Rice Pudding)",
+        "Buttermilk Curry Soup (Kadi Pakora)",
+        "Bhuna Khichuri (Bengali Rice and Lentils)",
+        "Khara Pongal (Rice and Mung Bean Porridge)",
+        "Seviyan Ji Khirni (Sindhi Vermicelli Pudding)"
+      ],
+      "recall@3": 1.0,
+      "latency_seconds": 29.684,
+      "answer_preview": "Here is what I found for you:  # Dish: Kheer (Rice Pudding)  ## Intro Kheer or payasam is a thick rice pudding.  ## Ingredients - 1 L (4 cups ) milk - 250 ml (1 cup) long grain white rice - 125 ml (½ "
+    }
+  ]
+}

@@ -17,3 +17,5 @@ djangorestframework
 
 # Frontend (coursework demo)
 streamlit
+
+llama-cpp-python
