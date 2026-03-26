@@ -45,7 +45,7 @@ vector_store = FAISS.load_local(
 )
 
 # --- Hugging Face Classifier Model ---
-model_id = "Qwen/Qwen2.5-3B"
+model_id = "Qwen/Qwen2.5-0.5B-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(
     model_id,

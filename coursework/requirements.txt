@@ -19,3 +19,5 @@ djangorestframework
 streamlit
 
 llama-cpp-python
+
+bitsandbytes

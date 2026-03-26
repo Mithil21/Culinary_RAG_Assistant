@@ -34,7 +34,7 @@ python web_scrape.py
 
 ### 2. Enrich Metadata — `enrich_metadata.py`
 
-Uses `NousResearch/Meta-Llama-3-8B-Instruct` (4-bit quantized) to tag each recipe with structured metadata.
+Uses `Qwen/Qwen2.5-3B-Instruct` (4-bit quantized) to tag each recipe with structured metadata.
 
 - Classifies `diet` (veg / non-veg), `prep_time` (quick / slow), and `dish_type` (curry / rice / bread / snack / dessert / beverage / pickle-condiment)
 - Uses few-shot prompting to enforce strict JSON output
