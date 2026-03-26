@@ -1,3 +1,4 @@
+// Author: Mithil Baria
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({

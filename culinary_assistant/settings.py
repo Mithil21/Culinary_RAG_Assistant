@@ -1,3 +1,4 @@
+# Author: Mithil Baria
 """
 Django settings for culinary_assistant project.
 

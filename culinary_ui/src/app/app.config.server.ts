@@ -1,3 +1,4 @@
+// Author: Mithil Baria
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering, withRoutes } from '@angular/ssr';
 import { provideHttpClient, withFetch } from '@angular/common/http';

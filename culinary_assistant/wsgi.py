@@ -1,3 +1,4 @@
+# Author: Mithil Baria
 """
 WSGI config for culinary_assistant project.
 

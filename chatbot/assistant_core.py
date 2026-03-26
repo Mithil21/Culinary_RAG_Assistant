@@ -1,3 +1,4 @@
+# Author: Mithil Baria
 import json
 import ollama
 from typing import TypedDict, List, Dict, Any

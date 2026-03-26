@@ -1,12 +1,5 @@
+# Author: Mithil Baria
 # import os
-# from typing import TypedDict, List
-# import re
-# from langgraph.graph import StateGraph, END
-# from langchain_community.vectorstores import FAISS
-# from langchain_huggingface import HuggingFaceEmbeddings
-# from langchain_huggingface import HuggingFacePipeline
-# from langchain_core.prompts import PromptTemplate
-# from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
 # # ==========================================
 # # 1. INITIALIZE MODELS & DATABASE

@@ -1,3 +1,4 @@
+# Author: Mithil Baria
 """
 ASGI config for culinary_assistant project.
 

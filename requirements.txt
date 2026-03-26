@@ -1,3 +1,4 @@
+# Author: Mithil Baria
 # Core AI / RAG
 torch
 transformers
