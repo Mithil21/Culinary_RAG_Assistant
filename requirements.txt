@@ -12,9 +12,6 @@ sentence-transformers
 # Models
 accelerate
 
-# Backend
-django
-djangorestframework
-
-# Frontend (coursework demo)
+# Frontend
 streamlit
+ollama
