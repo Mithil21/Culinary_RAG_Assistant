@@ -1,159 +1,152 @@
-# Author: Mithil Baria
-# import json
-# from langchain_community.vectorstores import FAISS
-# from langchain_huggingface import HuggingFaceEmbeddings
-
-# def process_and_chunk_recipes(input_file):
-#     print(f"Loading enriched data from {input_file}...")
-    
-#     with open(input_file, "r", encoding="utf-8") as f:
-#         data = json.load(f)
-
-#     docs = []
-    
-#     for recipe in data:
-#         # Grabbing from the TOP-LEVEL of your JSON
-#         dish_name = recipe.get("title", "Unknown Dish")
-#         cuisine_type = recipe.get("cuisine_type", "South Asian")
-#         full_text = recipe.get("full_text", "")
-#         source_url = recipe.get("source_url", "")
-        
-#         # Grabbing from the NESTED metadata of your JSON
-#         llm_metadata = recipe.get("metadata", {})
-
-#         # Split the full_text back into our 3 distinct sections
-#         sections = re.split(r'\n---\s*(Introduction|Ingredients|Instructions)\s*---\n', full_text, flags=re.IGNORECASE)
-        
-#         # --- NEW: Extract ingredients text to add to ALL chunks for this dish ---
-#         ingredients_list = []
-#         for i in range(1, len(sections), 2):
-#             if sections[i].lower() == "ingredients":
-#                 raw_ingredients = sections[i+1].strip()
-#                 # Clean up the text into a nice list (stripping bullets/dashes)
-#                 ingredients_list = [line.strip().lstrip("-*• ") for line in raw_ingredients.split("\n") if line.strip()]
-#                 break
-        
-#         for i in range(1, len(sections), 2):
-#             content_type = sections[i].lower()
-#             content_text = sections[i+1].strip()
-            
-#             if not content_text:
-#                 continue
-                
-#             # Create a clean LangChain document with rich FAISS metadata
-#             doc = Document(
-#                 page_content=content_text,
-#                 metadata={
-#                     "dish_name": dish_name, 
-#                     "cuisine_type": cuisine_type,
-#                     "content_type": content_type,  
-#                     "source_url": source_url,
-#                     "diet": llm_metadata.get("diet", "unknown"),
-#                     "prep_time": llm_metadata.get("prep_time", "unknown"),
-#                     "dish_type": llm_metadata.get("dish_type", "unknown"),
-#                     "ingredients": ingredients_list  # <--- Injecting the ingredients list here!
-#                 }
-#             )
-#             docs.append(doc)
-
-#     return docs
-
-# def main():
-#     input_file = "south_asian_corpus_enriched.json" 
-    
-#     docs = process_and_chunk_recipes(input_file)
-#     print(f"Successfully generated {len(docs)} highly structured chunks.")
-    
-#     print("Initializing embedding model (BAAI/bge-small-en-v1.5)...")
-#     embeddings = HuggingFaceEmbeddings(
-#         model_name="BAAI/bge-small-en-v1.5",
-#         model_kwargs={"device": "cpu"},
-#         encode_kwargs={"normalize_embeddings": True},
-#     )
-    
-#     print("Building FAISS Vector Database...")
-#     vector_store = FAISS.from_documents(docs, embeddings)
-    
-#     output_dir = "./faiss_index"
-#     vector_store.save_local(output_dir)
-#     print(f"Done! Vector store saved to {output_dir}")
-
-# if __name__ == "__main__":
-#     main()
-
-
-
 import json
 import os
+from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_core.documents import Document
 
 # ==========================================
-# CONFIGURATION
+# 1. CONFIGURATION
 # ==========================================
-INPUT_FILE = "vector_ready_corpus.json"  # The file we just created
-DB_DIR = "./faiss_index"
+CORPUS_FILE = "vector_ready_corpus_with_metadata.json"
+INDEX_DIR = "./faiss_index"
+EMBEDDING_MODEL = "BAAI/bge-large-en-v1.5"
 
-def main():
-    print(f"Loading structured data from {INPUT_FILE}...")
-    try:
-        with open(INPUT_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        print(f"[ERROR] Could not find {INPUT_FILE}. Make sure the script ran successfully.")
-        return
+print("=" * 60)
+print("  🍛 BUILDING SEMANTIC FAISS INDEX")
+print("=" * 60)
 
-    documents = []
-    print("\nPackaging data into LangChain Documents...")
+with open(CORPUS_FILE, "r", encoding="utf-8") as f:
+    raw_recipes = json.load(f)
 
-    for item in data:
-        # 1. The Searchable Target: 
-        # We use the full text so the math embedding captures the entire context
-        page_content = item.get("full_text", "")
-        if not page_content:
-            continue
+print(f"✅ Loaded {len(raw_recipes)} raw recipe documents from JSON.\n")
 
-        # 2. The Payload:
-        # We flatten the metadata and safely stringify the nested recipe dictionary
-        metadata = {
-            "id": item.get("id", ""),
-            "title": item.get("title", "Unknown Dish"),
-            "source_url": item.get("source_url", ""),
-            "cuisine_type": item.get("cuisine_type", "South Asian"),
-            
-            # Pulling out your custom filter tags
-            "diet": item.get("metadata", {}).get("diet", "unknown"),
-            "prep_time": item.get("metadata", {}).get("prep_time", "unknown"),
-            "dish_type": item.get("metadata", {}).get("dish_type", "unknown"),
-            
-            # CRITICAL: Stringify the complex dictionary so FAISS doesn't crash
-            "recipe_json": json.dumps(item.get("recipe", {}))
-        }
+# ==========================================
+# 2. CHUNK CREATION — 3 CHUNKS PER RECIPE
+# ==========================================
+# Your JSON already has pre-parsed sections inside item["recipe"]:
+#   - item["recipe"]["intro"]          → string
+#   - item["recipe"]["ingredients"]    → list of strings
+#   - item["recipe"]["instructions"]   → list of strings
+# Top-level metadata lives at: item["id"], item["title"],
+#   item["source_url"], item["cuisine_type"], item["metadata"]
+# ==========================================
 
-        # Create the LangChain Document object
-        doc = Document(page_content=page_content, metadata=metadata)
-        documents.append(doc)
+chunked_documents = []
 
-    print(f"Successfully packaged {len(documents)} documents.")
+for item in raw_recipes:
+    # --- TOP-LEVEL FIELDS ---
+    dish_name    = str(item.get("title", "Unknown Dish")).strip()
+    recipe_id    = str(item.get("id", dish_name.replace(" ", "_").lower())).strip()
+    source_url   = item.get("source_url", "")
+    cuisine_type = item.get("cuisine_type", "South Asian")
 
-    # ==========================================
-    # VECTORIZATION
-    # ==========================================
-    print("\nInitializing Embedding Model (BAAI/bge-small-en-v1.5)...")
-    embeddings = HuggingFaceEmbeddings(
-        model_name="BAAI/bge-small-en-v1.5",
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
+    # nested metadata block
+    nested_meta  = item.get("metadata", {})
+    diet         = nested_meta.get("diet", "unknown")
+    prep_time    = nested_meta.get("prep_time", "unknown")
+    dish_type    = nested_meta.get("dish_type", "unknown")
+
+    # --- SHARED BASE METADATA (same for all 3 chunks) ---
+    base_meta = {
+        "title":        dish_name,
+        "source_url":   source_url,
+        "cuisine_type": cuisine_type,
+        "diet":         diet,
+        "prep_time":    prep_time,
+        "dish_type":    dish_type,
+    }
+
+    # --- PRE-PARSED CONTENT FROM JSON ---
+    recipe_block  = item.get("recipe", {})
+    intro_text    = recipe_block.get("intro", "").strip()
+
+    # ingredients is a list → join into a bullet string
+    ingredients_raw = recipe_block.get("ingredients", [])
+    ing_text = "\n".join(f"- {i}" for i in ingredients_raw).strip()
+
+    # instructions is a list → join as numbered steps (already numbered in data)
+    instructions_raw = recipe_block.get("instructions", [])
+    inst_text = "\n".join(instructions_raw).strip()
+
+    # ---- CHUNK 1: INTRODUCTION ----
+    if intro_text:
+        meta_intro = {**base_meta,
+                      "db_chunk_id":  f"{recipe_id}_intro",
+                      "content_type": "introduction"}
+        chunked_documents.append(Document(
+            page_content=(
+                f"Dish: {dish_name}\n"
+                f"Section: Introduction\n\n"
+                f"{intro_text}"
+            ),
+            metadata=meta_intro
+        ))
+
+    # ---- CHUNK 2: INGREDIENTS ----
+    if ing_text:
+        meta_ing = {**base_meta,
+                    "db_chunk_id":  f"{recipe_id}_ingredients",
+                    "content_type": "ingredients"}
+        chunked_documents.append(Document(
+            page_content=(
+                f"Dish: {dish_name}\n"
+                f"Section: Ingredients\n\n"
+                f"{ing_text}"
+            ),
+            metadata=meta_ing
+        ))
+
+    # ---- CHUNK 3: INSTRUCTIONS ----
+    if inst_text:
+        meta_inst = {**base_meta,
+                     "db_chunk_id":  f"{recipe_id}_instructions",
+                     "content_type": "instructions"}
+        chunked_documents.append(Document(
+            page_content=(
+                f"Dish: {dish_name}\n"
+                f"Section: Instructions\n\n"
+                f"{inst_text}"
+            ),
+            metadata=meta_inst
+        ))
+
+print(f"✅ Created {len(chunked_documents)} semantic chunks "
+      f"from {len(raw_recipes)} recipes "
+      f"(~3 chunks each: intro + ingredients + instructions)\n")
+
+# --- SAFETY CHECK ---
+if len(chunked_documents) == 0:
+    raise ValueError(
+        "CRITICAL: 0 chunks were created. "
+        "Check that 'recipe' keys exist in your JSON."
     )
 
-    print("Crunching vectors and building FAISS database... (This might take a minute)")
-    vector_store = FAISS.from_documents(documents, embeddings)
+# ==========================================
+# 3. BUILD & SAVE FAISS INDEX
+# ==========================================
+print(f"🔄 Initialising embedding model: {EMBEDDING_MODEL} ...")
+embeddings = HuggingFaceEmbeddings(
+    model_name=EMBEDDING_MODEL,
+    model_kwargs={"device": "cpu"},
+    encode_kwargs={"normalize_embeddings": True},  # cosine-similarity safe
+)
 
-    print(f"Saving database to {DB_DIR}...")
-    vector_store.save_local(DB_DIR)
+print("🔄 Vectorising chunks and building FAISS index ...")
+vector_store = FAISS.from_documents(chunked_documents, embeddings)
 
-    print("✅ Vector database successfully built and saved!")
+os.makedirs(INDEX_DIR, exist_ok=True)
+vector_store.save_local(INDEX_DIR)
 
-if __name__ == "__main__":
-    main()
+print(f"\n✅ FAISS index saved to '{INDEX_DIR}/'")
+print("   Files created: index.faiss  +  index.pkl")
+print("\n🎉 Done! Your index is ready for the LangGraph pipeline.\n")
+
+# ==========================================
+# 4. QUICK SANITY CHECK  (optional — remove in prod)
+# ==========================================
+print("=" * 60)
+print("  🔍 SANITY CHECK — Sample chunk structure")
+print("=" * 60)
+sample = chunked_documents[0]
+print(f"page_content preview:\n{sample.page_content[:300]}\n")
+print(f"metadata:\n{json.dumps(sample.metadata, indent=2)}")
