@@ -1,223 +1,9 @@
 # Author: Mithil Baria
-# import os
-
-# # ==========================================
-# # 1. INITIALIZE MODELS & DATABASE
-# # ==========================================
-# print("Loading FAISS Database...")
-# # Load the BAAI embedding model exactly as before
-# bge_embeddings = HuggingFaceEmbeddings(
-#     model_name="BAAI/bge-small-en-v1.5",
-#     model_kwargs={'device': 'cpu'}, 
-#     encode_kwargs={'normalize_embeddings': True}
-# )
-# # Load the vector store from your local folder
-# vector_store = FAISS.load_local("./faiss_index", bge_embeddings, allow_dangerous_deserialization=True)
-# retriever = vector_store.as_retriever(search_kwargs={"k": 3}) # Strict maximum of 3 chunks to reduce noise
-
-# print("Loading Qwen2.5-0.5B-Instruct Model...")
-# model_id = "Qwen/Qwen2.5-0.5B-Instruct"
-# tokenizer = AutoTokenizer.from_pretrained(model_id)
-# model = AutoModelForCausalLM.from_pretrained(model_id, device_map="auto")
-
-# # Wrap Qwen in a LangChain Pipeline
-# pipe = pipeline(
-#     "text-generation",
-#     model=model,
-#     tokenizer=tokenizer,
-#     max_new_tokens=256,
-#     max_length=None, # Suppresses the warning
-#     temperature=0.1, # Low temp for more deterministic routing and answers
-#     repetition_penalty=1.1,
-#     return_full_text=False # Prevents the prompt from bleeding into the output
-# )
-# llm = HuggingFacePipeline(pipeline=pipe)
-
-# # ==========================================
-# # 2. DEFINE THE GRAPH STATE
-# # ==========================================
-# class GraphState(TypedDict):
-#     """Represents the state of our graph."""
-#     question: str
-#     intent: str
-#     context: List[str]
-#     generation: str
-
-# # ==========================================
-# # 3. DEFINE THE NODES (The Functions)
-# # ==========================================
-# def classify_intent_node(state: GraphState):
-#     """Classifies the prompt using Few-Shot examples and a foolproof Regex parser."""
-#     question = state["question"]
-    
-#     prompt = PromptTemplate(
-#         template="""<|im_start|>system
-# You are a strict routing assistant. Classify the user's input into A, B, or C.
-# A: ANY recipe request, general food query (like "yoghurt", "chicken", "mishti doi"), or conversational reply ("yes", "okay").
-# B: ONLY listing raw ingredients (e.g., "milk, sugar, rice").
-# C: Explicitly asking for a NON-South Asian cuisine (e.g., "Mexican", "Italian", "tacos").
-
-# Output ONLY the single letter A, B, or C. Do not write anything else.
-
-# Examples:
-# Input: "How do I make a chicken dish?"
-# Output: A
-
-# Input: "milk, sugar"
-# Output: B
-
-# Input: "How do I make Mexican tacos?"
-# Output: C
-
-# Input: "how do i make sweet yoghurt dish?"
-# Output: A
-
-# Input: "yes"
-# Output: A<|im_end|>
-# <|im_start|>user
-# {question}<|im_end|>
-# <|im_start|>assistant
-# """,
-#         input_variables=["question"]
-#     )
-    
-#     chain = prompt | llm
-#     result = chain.invoke({"question": question}).strip().upper()
-    
-#     # The Bug-Killer Parser: Look for A, B, or C as a standalone word
-#     intent = "A" # Default
-#     match = re.search(r'\b[ABC]\b', result)
-    
-#     if match:
-#         intent = match.group(0) # Grabs the isolated A, B, or C
-#     else:
-#         # Absolute fallback if regex misses
-#         if result.startswith("C"): intent = "C"
-#         elif result.startswith("B"): intent = "B"
-#         else: intent = "A"
-        
-#     print(f"--- ROUTER CLASSIFIED AS SCENARIO {intent} (Raw output: '{result}') ---")
-#     return {"intent": intent}
-
-# def retrieve_node(state: GraphState):
-#     """Retrieves chunks from FAISS for Scenario A and removes exact duplicates."""
-#     question = state["question"]
-#     print("--- RETRIEVING FROM FAISS ---")
-#     docs = retriever.invoke(question)
-    
-#     unique_chunks = []
-#     seen_texts = set()
-    
-#     for d in docs:
-#         # Strip whitespace to catch slight formatting duplicates
-#         clean_text = d.page_content.strip() 
-#         if clean_text not in seen_texts:
-#             seen_texts.add(clean_text)
-#             unique_chunks.append(f"Dish: {d.metadata['dish_name']}\nContent: {clean_text}")
-            
-#     return {"context": unique_chunks}
-
-# def generate_recipe_node(state: GraphState):
-#     """Generates the final recipe using Qwen's native ChatML format."""
-#     question = state["question"]
-#     context = "\n\n".join(state["context"])
-#     print("--- GENERATING FINAL RECIPE (QWEN) ---")
-    
-#     prompt = PromptTemplate(
-#         template="""<|im_start|>system
-# You are a professional, friendly South Asian Culinary Assistant.
-# Rule 1: Use ONLY the provided Context to answer the question.
-# Rule 2: If the Context contains multiple different dishes (e.g., Chicken Tikka AND Chicken Korma) and the request is vague, DO NOT give a full recipe. Instead, list the available dishes and ask the user which one they prefer.
-# Rule 3: If the Context does not contain the answer, say exactly: "I'm sorry, I don't have a recipe for that in my database."
-# Rule 4: Format your response beautifully using Markdown. Include a friendly opening sentence. Use bold headings like **Ingredients** and **Instructions**. Use bullet points for ingredients and numbered lists for the cooking steps.<|im_end|>
-# <|im_start|>user
-# Context:
-# {context}
-
-# Question: {question}<|im_end|>
-# <|im_start|>assistant
-# """,
-#         input_variables=["context", "question"]
-#     )
-    
-#     chain = prompt | llm
-#     generation = chain.invoke({"context": context, "question": question})
-    
-#     final_answer = generation.split("<|im_start|>assistant")[-1].replace("<|im_end|>", "").strip()
-#     return {"generation": final_answer}
-
-# def clarify_ingredients_node(state: GraphState):
-#     """Scenario B: Asks for more details when only ingredients are provided."""
-#     print("--- GENERATING CLARIFICATION ---")
-#     response = "I see you listed some ingredients! Before I find a recipe, do you want a quick meal or a slow-cooked dish? Also, what kind of cooking utensils do you have available?"
-#     return {"generation": response}
-
-# def out_of_bounds_node(state: GraphState):
-#     """Scenario C: Handles non-South Asian queries."""
-#     print("--- GENERATING OUT OF BOUNDS RESPONSE ---")
-#     response = "My database is specialized only for South Asian cuisine. However, there might be similar styles of recipes in my database. Would you like me to look for a South Asian alternative?"
-#     return {"generation": response}
-
-# # ==========================================
-# # 4. DEFINE ROUTING LOGIC & COMPILE GRAPH
-# # ==========================================
-# def route_logic(state: GraphState) -> str:
-#     """Decides which node to go to next based on the intent."""
-#     intent = state["intent"]
-#     if intent == "A": return "retrieve"
-#     elif intent == "B": return "clarify"
-#     elif intent == "C": return "out_of_bounds"
-#     return "retrieve" # Fallback
-
-# # Build the Graph
-# workflow = StateGraph(GraphState)
-
-# # Add Nodes
-# workflow.add_node("classifier", classify_intent_node)
-# workflow.add_node("retrieve", retrieve_node)
-# workflow.add_node("generate", generate_recipe_node)
-# workflow.add_node("clarify", clarify_ingredients_node)
-# workflow.add_node("out_of_bounds", out_of_bounds_node)
-
-# # Add Edges
-# workflow.set_entry_point("classifier")
-# workflow.add_conditional_edges("classifier", route_logic)
-# workflow.add_edge("retrieve", "generate")
-# workflow.add_edge("generate", END)
-# workflow.add_edge("clarify", END)
-# workflow.add_edge("out_of_bounds", END)
-
-# # Compile
-# app = workflow.compile()
-
-# # ==========================================
-# # 5. DJANGO INTERFACE
-# # ==========================================
-# def get_assistant_response(user_input: str) -> dict:
-#     """
-#     This function is called by the Django view. 
-#     It runs the LangGraph workflow and packages the output for the API.
-#     """
-#     try:
-#         inputs = {"question": user_input}
-#         final_state = app.invoke(inputs)
-        
-#         return {
-#             "answer": final_state.get('generation', ''),
-#             "chunks_used": final_state.get('context', []),
-#             "intent": final_state.get('intent', 'Unknown')
-#         }
-#     except Exception as e:
-#         print(f"Error in LangGraph execution: {e}")
-#         return {
-#             "answer": "I'm sorry, I encountered an internal error processing your request.",
-#             "chunks_used": [],
-#             "intent": "Error"
-#         }
 
 import json
 import re
 import torch
+import traceback
 from typing import TypedDict, List, Dict, Any
 
 from langgraph.graph import StateGraph, END
@@ -230,12 +16,12 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 # 1. INITIALIZE MODELS & DATABASE
 # ==========================================
 print("Loading FAISS Database...")
-
+device = "cuda" if torch.cuda.is_available() else "cpu"
 bge_embeddings = HuggingFaceEmbeddings(
-    model_name="BAAI/bge-small-en-v1.5",
-    model_kwargs={"device": "cpu"},
-    encode_kwargs={"normalize_embeddings": True},
-)
+        model_name="BAAI/bge-large-en-v1.5",
+        model_kwargs={"device": device},
+        encode_kwargs={"normalize_embeddings": True},
+    )
 
 vector_store = FAISS.load_local(
     "./faiss_index",
@@ -244,8 +30,7 @@ vector_store = FAISS.load_local(
 )
 
 # Use retriever for normal semantic search
-retriever = vector_store.as_retriever(search_kwargs={"k": 8})
-
+# retriever = vector_store.as_retriever(search_kwargs={"k": 8})
 
 # --- THE FIX IS HERE ---
 # Determine local hardware
@@ -274,8 +59,10 @@ rewriter_pipe = pipeline(
     "text-generation",
     model=model,
     tokenizer=tokenizer,
-    max_new_tokens=50, # Keep this very low so it responds instantly!
-    temperature=0.1,   # Keep it cold so it doesn't get creative
+    max_new_tokens=300,
+    max_length=None,     # <--- ADD THIS to kill the warning
+    do_sample=False,      # <--- ADD THIS because temperature is set
+    # temperature=0.1,   
     repetition_penalty=1.1,
     return_full_text=False,
     pad_token_id=tokenizer.eos_token_id
@@ -287,8 +74,10 @@ pipe = pipeline(
     "text-generation",
     model=model,
     tokenizer=tokenizer,
-    max_new_tokens=300,
-    temperature=0.1,
+    max_new_tokens=800,
+    max_length=None,     # <--- ADD THIS
+    do_sample=False,      # <--- ADD THIS
+    # temperature=0.1,
     repetition_penalty=1.1,
     return_full_text=False,
     pad_token_id=tokenizer.eos_token_id
@@ -306,6 +95,7 @@ class GraphState(TypedDict, total=False):
     context: List[str]
     grouped_context: Dict[str, Dict[str, str]]
     selected_dishes: List[str]
+    raw_chunks: Dict[str, List[Dict[str, str]]] # <-- Added dict tracking for raw chunks
     generation: str
 
 # ==========================================
@@ -406,17 +196,19 @@ def rule_based_intent(question: str) -> str:
     if re.fullmatch(CHAT_REPLY_PATTERNS, q):
         return "CHAT_REPLY"
 
-    if looks_like_ingredient_list(q):
-        return "INGREDIENTS_ONLY"
-
+    # --- THE FIX: Move these explicit requests ABOVE the ingredient check ---
     if any(re.search(p, q) for p in RECIPE_PATTERNS):
         return "RECIPE_REQUEST"
 
     if any(re.search(p, q) for p in SUGGESTION_PATTERNS):
         return "SUGGESTION_REQUEST"
-
+        
     if any(re.search(p, q) for p in VAGUE_PATTERNS):
         return "VAGUE_REQUEST"
+
+    # --- NOW run the ingredient check ---
+    if looks_like_ingredient_list(q):
+        return "INGREDIENTS_ONLY"
 
     # short dish-like query such as "biryani"
     if len(q.split()) <= 4:
@@ -442,24 +234,21 @@ def extract_basic_slots(question: str) -> Dict[str, Any]:
     elif "egg" in q:
         diet_preference = "egg"
     
-    # Extract flavor profiles
     flavor_preference = ""
     if "spicy" in q or "hot" in q or "chili" in q or "masala" in q:
         flavor_preference = "spicy"
     elif "sweet" in q or "dessert" in q or "mithai" in q:
         flavor_preference = "sweet"
 
+    # --- FIX 1: Safely extract ingredients using word boundaries ---
     ingredients = []
-    tokens = re.split(r",| and |\n", q)
-    for token in tokens:
-        tok = token.strip()
-        if not tok:
-            continue
-        if tok in COMMON_INGREDIENT_WORDS:
-            ingredients.append(tok)
+    words = re.findall(r"[a-zA-Z]+", q)
+    for w in words:
+        if w in COMMON_INGREDIENT_WORDS and w not in ingredients:
+            ingredients.append(w)
 
     return {
-        "ingredients": list(dict.fromkeys(ingredients)),
+        "ingredients": ingredients,
         "time_preference": time_preference,
         "diet_preference": diet_preference,
         "flavor_preference": flavor_preference,
@@ -467,28 +256,49 @@ def extract_basic_slots(question: str) -> Dict[str, Any]:
     }
 
 
-def build_retrieval_query(question: str, intent: str, extracted: Dict[str, Any]) -> str:
-    ingredients = extracted.get("ingredients", [])
-    time_preference = extracted.get("time_preference", "")
-    diet = extracted.get("diet_preference", "")
-    flavor = extracted.get("flavor_preference", "")
 
-    # Build the descriptive modifiers
-    modifiers = f"{time_preference} {flavor} {diet}".strip()
+# def build_retrieval_query(question: str, intent: str, extracted: Dict[str, Any]) -> str:
+#     ingredients = extracted.get("ingredients", [])
+#     time_preference = extracted.get("time_preference", "")
+#     diet = extracted.get("diet_preference", "")
+#     flavor = extracted.get("flavor_preference", "")
+
+#     # Clean up modifiers
+#     modifiers = f"{time_preference} {flavor} {diet}".strip()
+#     modifiers = re.sub(r'\s+', ' ', modifiers) 
     
-    # Format the ingredients if we have them
-    ingredient_str = " ".join(ingredients) if ingredients else ""
+#     ingredient_str = " ".join(ingredients) if ingredients else ""
 
-    # 1. Handle Alternative Requests (Pizza -> Naan)
+#     # Strip instructional filler words (added 'based' to clean up 'rice based')
+#     clean_question = re.sub(r"(?i)\b(how to make|how do i make|recipe for|recipe|cook|prepare|based)\b", "", question).strip()
+#     if not clean_question:
+#         clean_question = question
+
+#     if intent == "ALTERNATIVE_REQUEST":
+#         alt_search = extracted.get("alternative_search", "")
+#         return f"{modifiers} {alt_search}".strip()
+
+#     # --- THE FIX: Highly Concentrated Semantic Query ---
+#     # We completely remove "South Asian recipe using" because those generic words 
+#     # dilute the embedding vector away from the specific ingredients!
+#     raw_query = f"{modifiers} {ingredient_str} {clean_question}".strip()
+    
+#     # Remove duplicate words (like 'rice rice') while keeping the exact order
+#     final_query = " ".join(dict.fromkeys(raw_query.split()))
+
+#     if not final_query:
+#         final_query = question
+
+#     return final_query
+
+def build_retrieval_query(question: str, intent: str, extracted: Dict[str, Any]) -> str:
+    ingredients = " ".join(extracted.get("ingredients", []))
+    modifiers = f"{extracted.get('time_preference', '')} {extracted.get('flavor_preference', '')} {extracted.get('diet_preference', '')}".strip()
     if intent == "ALTERNATIVE_REQUEST":
         alt_search = extracted.get("alternative_search", "")
         return f"South Asian {modifiers} recipe {alt_search}"
-
-    # 2. THE FIX: If we have ingredients in memory, ALWAYS inject them into the search!
-    if ingredient_str:
-        return f"South Asian {modifiers} recipe using {ingredient_str} {question}".strip()
-
-    # 3. Fallback for generic questions
+    if ingredients:
+        return f"South Asian {modifiers} recipe using {ingredients} {question}".strip()
     return f"South Asian {modifiers} recipe {question}".strip()
 
 
@@ -497,7 +307,7 @@ def group_docs_by_dish(docs) -> Dict[str, Dict[str, str]]:
 
     for d in docs:
         metadata = d.metadata or {}
-        dish_name = metadata.get("dish_name", "Unknown Dish").strip()
+        dish_name = metadata.get("dish_name", metadata.get("title", "Unknown Dish")).strip()
         content_type = metadata.get("content_type", "Unknown").strip().lower()
         text = d.page_content.strip()
 
@@ -523,24 +333,34 @@ def group_docs_by_dish(docs) -> Dict[str, Dict[str, str]]:
     return grouped
 
 
-def score_grouped_dishes(grouped: Dict[str, Dict[str, str]]) -> List[str]:
+def score_grouped_dishes(grouped: Dict[str, Dict[str, str]], structured_chunks: Dict[str, list]) -> List[str]:
     """
-    Prefer dishes with more complete structure:
-    Introduction + Ingredients + Instructions
+    Rank dishes purely by the AVERAGE L2 score of their retrieved chunks.
+    Lower average score = Better semantic match!
     """
     scored = []
 
-    for dish, parts in grouped.items():
-        score = 0
-        if parts.get("Introduction"):
-            score += 2
-        if parts.get("Ingredients"):
-            score += 3
-        if parts.get("Instructions"):
-            score += 4
-        scored.append((dish, score))
+    for dish in grouped.keys():
+        dish_chunks = structured_chunks.get(dish, [])
+        
+        # Safety check just in case
+        if not dish_chunks:
+            continue
+            
+        # 1. Add up all the chunk scores for this specific recipe
+        total_score = sum(c.get("score", 1.0) for c in dish_chunks)
+        
+        # 2. Average them out! (This prevents a 3-chunk recipe from being punished)
+        average_score = total_score / len(dish_chunks)
 
-    scored.sort(key=lambda x: x[1], reverse=True)
+        scored.append((dish, round(average_score, 4)))
+
+    # 3. Sort by average score ASCENDING (Lowest score = Best Match)
+    scored.sort(key=lambda x: x[1])
+
+    # Print the rankings to the terminal so you can watch Egg Rice destroy Eggplant
+    print(f"--- DISH RANKINGS (Average L2, Lower is better): {scored} ---")
+
     return [dish for dish, _ in scored]
 
 
@@ -605,10 +425,6 @@ def classify_intent_node(state: GraphState):
 
 
 def retrieve_node(state: GraphState):
-    """
-    Retrieve relevant chunks and group them by dish_name so generation can always produce:
-    About the dish -> Ingredients -> Instructions
-    """
     question = state["question"]
     intent = state["intent"]
     extracted = state.get("extracted", {})
@@ -616,12 +432,49 @@ def retrieve_node(state: GraphState):
     retrieval_query = build_retrieval_query(question, intent, extracted)
     print(f"--- RETRIEVING FROM FAISS: {retrieval_query} ---")
 
-    docs = retriever.invoke(retrieval_query)
+    # 1. Similarity Search with Score
+    raw_docs_with_scores = vector_store.similarity_search_with_score(retrieval_query, k=15)
 
-    grouped = group_docs_by_dish(docs)
-    ranked_dishes = score_grouped_dishes(grouped)
+    # 2. Filter by threshold AND KEEP THE SCORE TUPLE
+    filtered_docs_with_scores = [(doc, score) for doc, score in raw_docs_with_scores if score >= 0.30 and score <= 0.60]
+    
+    # 3. Bulletproof Fallback
+    # if len(filtered_docs_with_scores) < 3:
+    #     docs_with_scores = raw_docs_with_scores[:6]
+    # else:
+    #     docs_with_scores = filtered_docs_with_scores
 
-    # keep top 3 dish candidates max
+    docs_with_scores = filtered_docs_with_scores
+
+    print(f'=========DOCS RETRIEVED ({len(docs_with_scores)} chunks)=========')
+
+    # 4. Extract data and inject the exact L2 score!
+    structured_chunks = {}
+    just_docs = [] # We need a clean list of just docs for your grouping function
+    
+    for i, (d, score) in enumerate(docs_with_scores):
+        just_docs.append(d) # Save the document for the grouping helper
+        
+        meta = d.metadata or {}
+        dish_title = str(meta.get("title", meta.get("dish_name", "Unknown Dish"))).strip()
+        chunk_type = str(meta.get("content_type", "content")).lower()
+        db_chunk_id = str(meta.get("db_chunk_id", f"chunk_{i+1}"))
+        
+        if dish_title not in structured_chunks:
+            structured_chunks[dish_title] = []
+            
+        structured_chunks[dish_title].append({
+            "chunk_id": db_chunk_id,
+            "type": chunk_type,
+            "score": round(float(score), 4), # <--- SCORE IS SAVED HERE!
+            "text": d.page_content.strip()
+        })
+
+    # Pass the clean list of docs to your grouping helper
+    grouped = group_docs_by_dish(just_docs)
+    ranked_dishes = score_grouped_dishes(grouped, structured_chunks)
+
+    # --- FETCH ONLY 1 FOOD DISH ---
     selected_dishes = ranked_dishes[:3]
 
     raw_context = []
@@ -634,12 +487,16 @@ def retrieve_node(state: GraphState):
             f"Instructions: {parts.get('Instructions', '')}"
         )
 
-    print(f"--- DISH CANDIDATES: {selected_dishes} ---")
+    print(f"--- DISH CANDIDATE: {selected_dishes} ---")
+
+    # Clean the JSON output so it only shows the chunks for the winning dish
+    final_chunks = {dish: structured_chunks[dish] for dish in selected_dishes if dish in structured_chunks}
 
     return {
         "context": raw_context,
         "grouped_context": grouped,
-        "selected_dishes": selected_dishes
+        "selected_dishes": selected_dishes,
+        "raw_chunks": final_chunks
     }
 
 
@@ -686,98 +543,68 @@ def out_of_bounds_node(state: GraphState):
 
 
 def generate_recipe_node(state: GraphState):
-    """
-    Final response rules:
-    - If one strong dish match: provide
-      1. About the dish
-      2. Ingredients
-      3. Instructions
-    - If multiple plausible dish matches and query is vague/suggestive: list options first
-    """
     question = state["question"]
     intent = state["intent"]
     grouped = state.get("grouped_context", {})
     selected_dishes = state.get("selected_dishes", [])
 
-    print("--- GENERATING FINAL RECIPE ---")
-
     if not grouped or not selected_dishes:
-        return {
-            "generation": "I'm sorry, I don't have a recipe for that in my database."
-        }
+        return {"generation": "I'm sorry, I don't have a recipe for that in my database."}
 
-    context_text = serialize_grouped_context_for_prompt(grouped, selected_dishes)
+    print(f"--- GENERATING FINAL RECIPES ({len(selected_dishes)} found) ---")
+    
+    formatted_chunks = []
 
-    prompt = PromptTemplate(
-        template="""<|im_start|>system
-You are a professional, friendly South Asian Culinary Assistant.
+    # Run a for loop to beautify each recipe individually
+    for dish in selected_dishes:
+        parts = grouped[dish]
+        
+        # 1. Build the raw text for just this single dish
+        raw_text = f"Dish: {dish}\n\n"
+        if parts.get('Introduction'): 
+            raw_text += f"Introduction:\n{parts['Introduction']}\n\n"
+        if parts.get('Ingredients'): 
+            raw_text += f"Ingredients:\n{parts['Ingredients']}\n\n"
+        if parts.get('Instructions'): 
+            raw_text += f"Instructions:\n{parts['Instructions']}\n"
 
-You must follow these rules exactly:
-
-Rule 1:
-Use ONLY the provided Context.
-
-Rule 2:
-If there is one clearly relevant dish, answer in this exact order:
-1. A short friendly opening
-2. **About the Dish**
-3. **Ingredients**
-4. **Instructions**
-
-Rule 3:
-If multiple different dishes are present and the user's request is vague, short, or suggestive, do NOT give a full recipe immediately.
-Instead:
-- list 2 to 3 matching dish names
-- give 1 short line about each
-- ask the user which one they want
-
-Rule 4:
-If the context is missing the answer, say exactly:
-"I'm sorry, I don't have a recipe for that in my database."
-
-Rule 5:
-Do not invent ingredients or steps.
-Do not use knowledge outside the context.
-
-Rule 6:
-When giving a recipe:
-- Use Markdown
-- Use bold section headings
-- Ingredients should be bullet points if possible
-- Instructions should be numbered
-
-Rule 7:
-When answering, beautify the answer with a friendly tone, emojis, and engaging language to make it more enjoyable to read.
-Make the answers look correct and well formatted.
-
-Intent: {intent}
-<|im_end|>
+        # 2. Build the strict ChatML prompt for the Qwen model
+        # 2. Build the LangChain Prompt Template
+        prompt = PromptTemplate(
+            template="""<|im_start|>system
+You are a precise Markdown Formatting Assistant.
+Your ONLY job is to take the provided recipe data and format it into beautiful Markdown.
+- Use bolding for headings (like **Introduction**, **Ingredients**, **Instructions**).
+- Use bullet points for ingredients and numbered lists for instructions.
+- Do NOT invent, guess, or leave out ANY details from the provided text.
+- Output ONLY the formatted recipe.<|im_end|>
 <|im_start|>user
-Context:
-{context}
-
-Question:
-{question}
-<|im_end|>
+Recipe Data to format:
+{raw_text}<|im_end|>
 <|im_start|>assistant
 """,
-        input_variables=["intent", "context", "question"]
-    )
+            input_variables=["raw_text"]
+        )
+        
+        # 3. Call the LLM safely via LangChain
+        chain = prompt | llm
+        
+        # Pass the raw_text variable into the prompt template dynamically
+        raw_generation = chain.invoke({"raw_text": raw_text})
+        
+        # Strip the ChatML tags
+        clean_generation = safe_strip_generation(raw_generation)
+        
+        # 4. Save the beautified recipe (or fallback to raw text if the LLM fails)
+        if clean_generation:
+            formatted_chunks.append(clean_generation)
+        else:
+            formatted_chunks.append(raw_text)
 
-    chain = prompt | llm
-    raw_generation = chain.invoke({
-        "intent": intent,
-        "context": context_text,
-        "question": question
-    })
-
-    final_answer = safe_strip_generation(raw_generation)
-
-    if not final_answer:
-        final_answer = "I'm sorry, I don't have a recipe for that in my database."
+    # Join all the individually formatted recipes together with a clean divider
+    final_answer = "Here is what I found for you:\n\n" + "\n\n---\n\n".join(formatted_chunks)
 
     return {"generation": final_answer}
-
 
 # ==========================================
 # 5. ROUTING LOGIC
@@ -834,13 +661,17 @@ Rules:
    - "spicy"
    - "curry"
    - "rice-based"
+   - "rice based"
+   - "veg"
+   - "vegetarian"
+   - "non veg"
    - "non vegetarian"
 3. Do NOT answer the user.
 4. Output ONLY the rewritten search query text.
 5. Do NOT include explanations, labels, bullets, quotes, or extra text.
 6. If the new message is already clear and standalone, return it with only minimal cleanup.
 7. If the user is accepting a South Asian alternative after rejecting a non-South-Asian dish, rewrite toward a similar South Asian dish search.
-8. If the new message adds preferences, merge them with the latest relevant food request from history.
+8. If the user adds preferences, merge them with the latest relevant food request from history.
 9. Keep the rewritten query short, natural, and retrieval-friendly.
 
 Good examples:
@@ -957,7 +788,8 @@ def get_assistant_response(user_input: str, chat_history: list) -> dict:
 
         return {
             "answer": final_state.get("generation", ""),
-            "chunks_used": final_state.get("context", []),
+            # Map raw JSON chunks exactly as they came from FAISS dict
+            "chunks_used": final_state.get("raw_chunks", {}), 
             "intent": final_state.get("intent", "Unknown"),
             "selected_dishes": final_state.get("selected_dishes", []),
             "extracted": final_state.get("extracted", {})
@@ -965,9 +797,10 @@ def get_assistant_response(user_input: str, chat_history: list) -> dict:
 
     except Exception as e:
         print(f"Error in LangGraph execution: {e}")
+        traceback.print_exc()
         return {
             "answer": "I'm sorry, I encountered an internal error processing your request.",
-            "chunks_used": [],
+            "chunks_used": {},
             "intent": "Error",
             "selected_dishes": [],
             "extracted": {}
