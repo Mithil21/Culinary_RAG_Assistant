@@ -333,33 +333,47 @@ def group_docs_by_dish(docs) -> Dict[str, Dict[str, str]]:
     return grouped
 
 
-def score_grouped_dishes(grouped: Dict[str, Dict[str, str]], structured_chunks: Dict[str, list]) -> List[str]:
+import re
+
+def score_grouped_dishes(grouped: Dict[str, Dict[str, str]], structured_chunks: Dict[str, list], extracted_slots: Dict[str, Any]) -> List[str]:
     """
-    Rank dishes purely by the AVERAGE L2 score of their retrieved chunks.
-    Lower average score = Better semantic match!
+    Rank dishes using Hybrid Scoring: Best L2 Distance + Exact Keyword Bonuses.
+    Lower final score = Better match!
     """
+    user_ingredients = extracted_slots.get("ingredients", [])
     scored = []
 
-    for dish in grouped.keys():
+    for dish, parts in grouped.items():
         dish_chunks = structured_chunks.get(dish, [])
-        
-        # Safety check just in case
         if not dish_chunks:
             continue
             
-        # 1. Add up all the chunk scores for this specific recipe
-        total_score = sum(c.get("score", 1.0) for c in dish_chunks)
+        # 1. Take the BEST (lowest) score from the chunks. Do NOT average!
+        best_score = min(c.get("score", 1.0) for c in dish_chunks)
         
-        # 2. Average them out! (This prevents a 3-chunk recipe from being punished)
-        average_score = total_score / len(dish_chunks)
+        # 2. Combine the text to search for exact ingredient matches
+        dish_name_lower = dish.lower()
+        recipe_text_lower = (parts.get("Introduction", "") + " " + parts.get("Ingredients", "")).lower()
 
-        scored.append((dish, round(average_score, 4)))
+        # 3. Apply Keyword Bonuses to force exact matches to the top
+        bonus = 0.0
+        for ing in user_ingredients:
+            ing_lower = ing.lower()
+            
+            # Massive bonus if the ingredient is literally in the title (e.g., "Egg" in "Egg Rice")
+            if re.search(rf"\b{ing_lower}\b", dish_name_lower):
+                bonus += 0.15
+            # Moderate bonus if the ingredient is explicitly listed in the recipe text
+            elif re.search(rf"\b{ing_lower}\b", recipe_text_lower):
+                bonus += 0.05
 
-    # 3. Sort by average score ASCENDING (Lowest score = Best Match)
+        final_score = best_score - bonus
+        scored.append((dish, round(final_score, 4)))
+
+    # 4. Sort by final score ASCENDING (Lowest score = Best Match)
     scored.sort(key=lambda x: x[1])
 
-    # Print the rankings to the terminal so you can watch Egg Rice destroy Eggplant
-    print(f"--- DISH RANKINGS (Average L2, Lower is better): {scored} ---")
+    print(f"--- ROBUST RANKINGS (Lower is better): {scored} ---")
 
     return [dish for dish, _ in scored]
 
@@ -434,6 +448,7 @@ def retrieve_node(state: GraphState):
 
     # 1. Similarity Search with Score
     raw_docs_with_scores = vector_store.similarity_search_with_score(retrieval_query, k=15)
+    print(raw_docs_with_scores)
 
     # 2. Filter by threshold AND KEEP THE SCORE TUPLE
     filtered_docs_with_scores = [(doc, score) for doc, score in raw_docs_with_scores if score >= 0.30 and score <= 0.60]
@@ -472,10 +487,10 @@ def retrieve_node(state: GraphState):
 
     # Pass the clean list of docs to your grouping helper
     grouped = group_docs_by_dish(just_docs)
-    ranked_dishes = score_grouped_dishes(grouped, structured_chunks)
+    ranked_dishes = score_grouped_dishes(grouped, structured_chunks, extracted)
 
     # --- FETCH ONLY 1 FOOD DISH ---
-    selected_dishes = ranked_dishes[:3]
+    selected_dishes = ranked_dishes[:1]
 
     raw_context = []
     for dish in selected_dishes:
